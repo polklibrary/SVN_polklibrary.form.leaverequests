@@ -11,8 +11,8 @@ from plone.registry.interfaces import IRegistry
 import datetime,json,urllib,pytz,smtplib
 
 
-#GCAL_KEY = '/opt/plone/plone-5-zeo-0/zeocluster/liboff.google.private.key'
-GCAL_KEY = '/home/vagrant/Plone/zinstance/liboff.google.private.key'
+GCAL_KEY = '/opt/plone/plone-5-zeo-0/zeocluster/liboff.google.private.key'
+#GCAL_KEY = '/home/vagrant/Plone/zinstance/liboff.google.private.key'
 
 
 
