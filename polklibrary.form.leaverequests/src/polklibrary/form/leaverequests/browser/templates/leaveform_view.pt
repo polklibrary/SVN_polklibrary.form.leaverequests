@@ -99,7 +99,6 @@
                 color: white;
                 display: inline-block;
                 font-weight: bold;
-                margin: 0px 0 30px 0;
                 text-align: center;
                 padding: 20px 25px;
             }
@@ -118,28 +117,32 @@
                     <a class="submit-leaverequest" href="${context/absolute_url}/++add++polklibrary.form.leaverequests.models.leaverequest">Submit Leave Request</a>
                 </div>
                 <div class="request-data col-50">
-                    <h3>Your leave requests</h3>
-                
-                    <a class="your-requests" tal:repeat="item view/get_your_content" href="${item/url}">
-                        <span>
-                            ${item/workflow_status}
-                        </span>
-                        <span tal:content="structure item/info"></span>
-                    </a>
-                    <span id="showmore-your-requests">(Show more)</span>
+                    <div class="column-outer">
+                        <h3>Your leave requests</h3>
+                    
+                        <a class="your-requests" tal:repeat="item view/get_your_content" href="${item/url}">
+                            <span>
+                                ${item/workflow_status}
+                            </span>
+                            <span tal:content="structure item/info"></span>
+                        </a>
+                        <span id="showmore-your-requests">(Show more)</span>
+                    </div>
                 </div>
                 
-                <div class="col-50" tal:condition="view/is_reviewer">
+                <div class="request-data col-50" tal:condition="view/is_reviewer">
+                    <div class="column-outer">
                     
-                    <h3>Your pending approvals</h3>
-                
-                    <a class="your-reviews" tal:repeat="item view/get_reviewers_content" href="${item/url}">
-                        <span>
-                            ${item/workflow_status}
-                        </span>
-                        <span> requested by ${item/creator}</span>
-                    </a>
-                    <span id="showmore-your-reviews">(Show more)</span>
+                        <h3>Your pending approvals</h3>
+                    
+                        <a class="your-reviews" tal:repeat="item view/get_reviewers_content" href="${item/url}">
+                            <span>
+                                ${item/workflow_status}
+                            </span>
+                            <span> requested by ${item/creator}</span>
+                        </a>
+                        <span id="showmore-your-reviews">(Show more)</span>
+                    </div>
                 </div>
             </div>
             
