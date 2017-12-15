@@ -1,0 +1,51 @@
+input.datepick{
+   display: inline-block !important;
+   margin: 0 10px !important;
+   width: 110px !important;
+}
+select.leavepick{
+   display: inline-block !important;
+   margin: 0 10px !important;
+   width: 190px  !important;
+}
+select.timepick {
+   display: inline-block !important;
+   margin: 0 10px !important;
+   width: 115px !important; 
+}
+input.durationpick {
+   border: 1px solid #ccc;
+   border-radius: 3px;
+   display: inline-block !important;
+   margin: 0 10px !important;
+   padding: 0 10px;
+   height: 30px;
+   width: 75px !important; 
+}
+
+input.timeslot-add{
+    margin: 10px;
+}
+
+input.timeslot-delete{
+    background-color: red;
+    margin: 10px;
+}
+
+.help {
+    color: #908a8a;
+    display: inline-block;
+    font-style: italic;
+    padding: 0 20px;
+}
+
+.timeslot-row.timeslot-validation {
+    background-color: pink;
+    border: 1px solid red;
+}
+
+
+body.template-polklibrary-form-leaverequests-models-leaverequest #formfield-form-widgets-title { display: none; }
+body.template-polklibrary-form-leaverequests-models-leaverequest #formfield-form-widgets-email { display: none; }
+body.template-polklibrary-form-leaverequests-models-leaverequest #formfield-form-widgets-timeoff { display: none; }
+body.template-polklibrary-form-leaverequests-models-leaverequest #formfield-form-widgets-gcal_event_id { display: none; }

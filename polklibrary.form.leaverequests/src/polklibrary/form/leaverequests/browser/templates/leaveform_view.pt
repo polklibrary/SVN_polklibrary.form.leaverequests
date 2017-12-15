@@ -1,0 +1,153 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone"
+	  lang="en">
+<body>
+
+
+	<metal:content-title fill-slot="content-title">
+        <h1 class="documentFirstHeading">Leave Request</h1>
+    </metal:content-title>
+	<metal:content-description fill-slot="content-description"></metal:content-description>
+
+    
+	<metal:block fill-slot="javascript_head_slot">
+        <script type="text/javascript">
+            var INCREMENT = 10;
+            var ShowYourRequests = 0;
+            var ShowYourReviews = 0;
+            
+            $(document).ready(function(){
+                
+                var ShowNextYourRequests = function(){
+                    ShowYourRequests += INCREMENT;
+                    $('a.your-requests').each(function(i,e){
+                        console.log(i);
+                        if (i < ShowYourRequests)
+                            $(e).show();
+                        else
+                            $(e).hide();
+                    });
+                }
+                
+                var ShowNextYourReviews = function(){
+                    ShowYourReviews += INCREMENT;
+                    $('a.your-reviews').each(function(i,e){
+                        console.log(i);
+                        if (i < ShowYourReviews)
+                            $(e).show();
+                        else
+                            $(e).hide();
+                    });
+                }
+                
+                ShowNextYourRequests();
+                $('#showmore-your-requests').click(function(){
+                    ShowNextYourRequests();
+                });
+                
+                
+                ShowNextYourReviews();
+                $('#showmore-your-reviews').click(function(){
+                    ShowNextYourReviews();
+                });
+                
+            });
+            
+        </script>
+	</metal:block>
+
+    
+	<metal:block fill-slot="style_slot">
+        <style>
+            #leaverequest-form{
+                padding: 10px;
+            }
+        
+            #leaverequest-form .request-data a {
+                border: 1px solid #ccc;
+                display: block;
+                padding: 5px 10px;
+                vertical-align: top;
+            }
+            #leaverequest-form .request-data a:hover {
+                background-color: #eee;
+                text-decoration: none;
+            }
+            
+            #leaverequest-form .request-data a span:first-child {
+                display: inline-block;
+                font-weight: bold;
+                width: 100px;
+                vertical-align: top;
+            }
+            
+            #leaverequest-form .request-data a span:last-child {
+                display: inline-block;
+                vertical-align: top;
+            }
+            #showmore-your-requests, #showmore-your-reviews {
+                color: #2385c4;
+                cursor: pointer;
+                font-style: italic;
+            }
+            #leaverequest-form .submit-leaverequest{
+                background-color: #1072b1;
+                border-radius: 5px;
+                color: white;
+                display: inline-block;
+                font-weight: bold;
+                margin: 0px 0 30px 0;
+                text-align: center;
+                padding: 20px 25px;
+            }
+            
+        </style>
+	</metal:block>
+
+	<metal:content-core fill-slot="content-core">
+
+        <div id="leaverequest-form">
+            
+            
+            
+            <div class="column">
+                <div class="col-100 tc" tal:condition="not:view/is_anonymous">
+                    <a class="submit-leaverequest" href="${context/absolute_url}/++add++polklibrary.form.leaverequests.models.leaverequest">Submit Leave Request</a>
+                </div>
+                <div class="request-data col-50">
+                    <h3>Your leave requests</h3>
+                
+                    <a class="your-requests" tal:repeat="item view/get_your_content" href="${item/url}">
+                        <span>
+                            ${item/workflow_status}
+                        </span>
+                        <span tal:content="structure item/info"></span>
+                    </a>
+                    <span id="showmore-your-requests">(Show more)</span>
+                </div>
+                
+                <div class="col-50" tal:condition="view/is_reviewer">
+                    
+                    <h3>Your pending approvals</h3>
+                
+                    <a class="your-reviews" tal:repeat="item view/get_reviewers_content" href="${item/url}">
+                        <span>
+                            ${item/workflow_status}
+                        </span>
+                        <span> requested by ${item/creator}</span>
+                    </a>
+                    <span id="showmore-your-reviews">(Show more)</span>
+                </div>
+            </div>
+            
+            
+            <div class="clear"></div>
+        </div>
+        
+	</metal:content-core>
+
+</body>
+</html>

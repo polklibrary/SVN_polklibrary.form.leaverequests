@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<layers>
+  <layer
+      name="polklibrary.form.leaverequests"
+      interface="polklibrary.form.leaverequests.interfaces.IPolklibraryFormLeaverequestsLayer"
+      />
+</layers>

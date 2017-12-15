@@ -1,0 +1,139 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone"
+	  lang="en">
+<body>
+
+
+	<metal:content-title fill-slot="content-title">
+        <h1 class="documentFirstHeading">Leave Request</h1>
+    </metal:content-title>
+	<metal:content-description fill-slot="content-description"></metal:content-description>
+
+    
+	<metal:block fill-slot="style_slot">
+        <style>
+            #leaverequest-sheet label {
+                margin: 0;
+            }
+            #leaverequest-sheet > div div {
+                padding: 5px 10px 10px 10px;
+            }
+            
+            #leaverequest-sheet  .approve {
+                background-color: #00ab00;
+                border-radius: 5px;
+                color: white;
+                display: inline-block;
+                font-weight: bold;
+                margin: 10px;
+                padding: 5px 10px;
+            }
+            
+            #leaverequest-sheet  .deny {
+                background-color: #ce0000;
+                border-radius: 5px;
+                color: white;
+                display: inline-block;
+                font-weight: bold;
+                margin: 10px;
+                padding: 5px 10px;
+            }
+            
+            #leaverequest-sheet  .edit {
+                background-color: #2959af;
+                border-radius: 5px;
+                color: white;
+                display: inline-block;
+                font-weight: bold;
+                margin: 10px;
+                padding: 5px 10px;
+            }
+            #leaverequest-sheet .requestinfo {
+                color: #666;
+                font-style: italic;
+            }
+            
+            #leaverequest-sheet .column-outer{
+                background-color: #eee;
+                border: 1px solid #999;
+                border-radius: 5px;
+            }
+        </style>
+	</metal:block>
+
+	<metal:content-core fill-slot="content-core">
+
+        <div id="leaverequest-sheet" class="column">
+            
+            <div class="col-50">
+                <label>
+                    Name
+                </label>
+                <div>
+                    ${context/title}
+                </div>
+                
+                <label>
+                    Status
+                </label>
+                <div>
+                    ${view/status}
+                </div>
+                
+                <label>
+                    Time Off
+                </label>
+                <div tal:content="structure view/time_off">
+                </div>
+                
+                <tal:block condition="context/coverage">
+                <label>
+                    Optional Coverage
+                </label>
+                <div>
+                    ${context/coverage}
+                </div>
+                </tal:block>
+                
+                <tal:block condition="context/description">
+                <label>
+                    Optional Note
+                </label>
+                <div>
+                    ${context/description}
+                </div>
+                </tal:block>
+                
+                <label>
+                    Submitted
+                </label>
+                <div>
+                    ${view/created}
+                </div>
+            </div>
+            
+            <div class="col-50">
+                <div class="column-outer">
+                    <h3>Options</h3>
+                    
+                    <a tal:condition="view/is_reviewer" class="approve" href="${context/absolute_url}/leaverequest_workflow?status=1&token=${context/UID}">Approve</a>
+                    <a tal:condition="view/is_reviewer" class="deny" href="${context/absolute_url}/leaverequest_workflow?status=0&token=${context/UID}">Deny</a>
+                    <a class="edit" href="${context/absolute_url}/edit">Edit</a>
+                    
+                    <div class="requestinfo">
+                    (Note: Editing a request will revert it to "Pending")
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="clear"></div>
+        </div>
+        
+	</metal:content-core>
+
+</body>
+</html>

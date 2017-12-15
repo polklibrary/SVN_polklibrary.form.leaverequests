@@ -1,0 +1,70 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="polklibrary.form.leaverequests">
+
+    
+    <browser:page
+        for="*"
+        name="close_window"
+        class=".close_window.CloseWindowView"
+        permission="zope.Public"
+        />
+        
+    <browser:page
+        for="*"
+        name="leaverequest_workflow"
+        class=".ws_approval.WSView"
+        permission="zope.Public"
+        />
+        
+    <browser:page
+        for="*"
+        name="get_stafftype"
+        class=".ws_stafftype.WSView"
+        permission="zope.Public"
+        />
+        
+    <browser:page
+        for="polklibrary.form.leaverequests.models.leaverequest.ILeaveRequest"
+        name="leaverequest_view"
+        class=".leaverequest.LeaveRequestView"
+        permission="zope2.View"
+        />
+        
+    
+    <browser:page
+        for="polklibrary.form.leaverequests.models.leaveform.ILeaveForm"
+        name="leaveform_view"
+        class=".leaveform.LeaveFormView"
+        permission="zope2.View"
+        />
+        
+    
+    <browser:viewlet
+      name="polklibrary.form.leaverequests.viewlet_leaverequests"
+      for="*" 
+      manager="plone.app.layout.viewlets.interfaces.IBelowContent" 
+      class=".viewlet_leaverequests.LeaveRequestViewlet"
+      template="templates/viewlet_leaverequests.pt"
+      layer="zope.interface.Interface"
+      permission="zope2.View"
+      />
+    
+    
+  <!-- Set overrides folder for Just-a-Bunch-Of-Templates product -->
+  <include package="z3c.jbot" file="meta.zcml" />
+  <browser:jbot
+      directory="overrides"
+      layer="polklibrary.form.leaverequests.interfaces.IPolklibraryFormLeaverequestsLayer"
+      />
+
+  <!-- Publish static files -->
+  <browser:resourceDirectory
+      name="polklibrary.form.leaverequests"
+      directory="static"
+      />
+
+</configure>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<object name="portal_catalog" meta_type="Plone Catalog Tool">
+
+    <index name="supervisors" meta_type="FieldIndex">
+        <indexed_attr value="supervisors"/>
+    </index> 
+    <column value="supervisors"/>
+    
+    <index name="workflow_status" meta_type="FieldIndex">
+        <indexed_attr value="workflow_status"/>
+    </index> 
+    <column value="workflow_status"/>
+    
+    
+    <index name="timeoff" meta_type="FieldIndex">
+        <indexed_attr value="timeoff"/>
+    </index> 
+    <column value="timeoff"/>
+   
+    
+</object>

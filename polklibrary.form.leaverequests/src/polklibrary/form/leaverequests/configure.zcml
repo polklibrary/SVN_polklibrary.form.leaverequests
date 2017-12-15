@@ -1,0 +1,50 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="polklibrary.form.leaverequests">
+
+  <i18n:registerTranslations directory="locales" />
+
+  <includeDependencies package="." />
+
+  <include package=".browser" />
+  <include package=".models" />
+
+
+  <genericsetup:registerProfile
+      name="default"
+      title="polklibrary.form.leaverequests"
+      directory="profiles/default"
+      description="Installs the polklibrary.form.leaverequests add-on."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:importStep
+      name="polklibrary.form.leaverequests-postInstall"
+      title="polklibrary.form.leaverequests post_install import step"
+      description="Post install import step from polklibrary.form.leaverequests"
+      handler=".setuphandlers.post_install">
+  </genericsetup:importStep>
+
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="polklibrary.form.leaverequests"
+      directory="profiles/uninstall"
+      description="Uninstalls the polklibrary.form.leaverequests add-on."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:importStep
+      name="polklibrary.form.leaverequests-uninstall"
+      title="polklibrary.form.leaverequests uninstall import step"
+      description="Import step run during ininstalling polklibrary.form.leaverequests"
+      handler=".setuphandlers.uninstall">
+  </genericsetup:importStep>
+
+  <utility
+      factory=".setuphandlers.HiddenProfiles"
+      name="polklibrary.form.leaverequests-hiddenprofiles" />
+
+</configure>
