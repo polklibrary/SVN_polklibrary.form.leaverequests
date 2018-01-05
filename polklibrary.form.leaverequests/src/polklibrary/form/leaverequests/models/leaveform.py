@@ -1,5 +1,4 @@
 from plone import api
-from plone.app.textfield import RichText
 from plone.supermodel import model
 from zope import schema
 

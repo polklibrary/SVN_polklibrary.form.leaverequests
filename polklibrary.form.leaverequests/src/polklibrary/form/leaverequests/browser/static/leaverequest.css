@@ -47,5 +47,8 @@ input.timeslot-delete{
 
 /* body.template-polklibrary-form-leaverequests-models-leaverequest #formfield-form-widgets-title { display: none; } */
 /* body.template-polklibrary-form-leaverequests-models-leaverequest #formfield-form-widgets-email { display: none; } */
-body.template-polklibrary-form-leaverequests-models-leaverequest #formfield-form-widgets-timeoff { display: none; }
-body.template-polklibrary-form-leaverequests-models-leaverequest #formfield-form-widgets-gcal_event_id { display: none; }
+body.template-polklibrary-form-leaverequests-models-leaverequest #formfield-form-widgets-timeoff,
+body.template-polklibrary-form-leaverequests-models-leaverequest #formfield-form-widgets-gcal_event_id,
+body.template-edit.portaltype-polklibrary-form-leaverequests-models-leaverequest  #formfield-form-widgets-timeoff,
+body.template-edit.portaltype-polklibrary-form-leaverequests-models-leaverequest  #formfield-form-widgets-gcal_event_id
+{ display: none; }

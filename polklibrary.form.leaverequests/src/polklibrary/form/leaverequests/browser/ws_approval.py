@@ -54,13 +54,15 @@ class WSView(BrowserView):
                 obj.reindexObject()
                     
                 body = """
-                    <div>Your leave request was ${status} by ${approver}</div> 
-                    <div style="border: 1px solid #888; background-color: #eee; padding: 10px; margin-top: 10px; max-width: 500px;">
-                        <div style="font-weight: bold">${requestor}</div>
-                        <div style="margin-left: 10px;">${timeoff}</div>
-                        <div style="margin: 10px;">
-                            <a style="background-color:#2959af; color:white; display:inline-block; font-weight:bold; margin:10px; padding:5px 10px; text-decoration: none;" href="${link}">View Request</a>
-                        </div>
+                    <div>
+                        <div>Your leave request was ${status} by ${approver}</div> 
+                        <div style="border: 1px solid #888; background-color: #eee; padding: 10px; margin-top: 10px; max-width: 500px;">
+                            <div style="font-weight: bold">${requestor}</div>
+                            <div style="margin-left: 10px;">${timeoff}</div>
+                            <div style="margin: 10px;">
+                                <a style="background-color:#2959af; color:white; display:inline-block; font-weight:bold; margin:10px; padding:5px 10px; text-decoration: none;" href="${link}">View Request</a>
+                            </div>
+                        </div> 
                     </div> 
                 """
                 body = body.replace('${approver}', obj.supervisors)

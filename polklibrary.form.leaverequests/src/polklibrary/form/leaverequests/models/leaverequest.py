@@ -1,21 +1,20 @@
+from Acquisition import aq_inner
 from plone import api
-from plone.app.textfield import RichText
 from plone.autoform import directives
 from plone.supermodel import model
+from plone.uuid.interfaces import IUUID
 from zope import schema
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from zope.interface import directlyProvides
 from zope.schema.interfaces import IContextSourceBinder
-from datetime import datetime
         
-from plone.dexterity.browser.add import DefaultAddForm, DefaultAddView
-from plone.dexterity.browser.edit import DefaultEditForm, DefaultEditView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from plone.dexterity.browser.add import  DefaultAddForm, DefaultAddView
+from plone.dexterity.browser.edit import DefaultEditForm
 
 from polklibrary.form.leaverequests.browser.leaverequest import TimeOffFormater
 from polklibrary.form.leaverequests.utility import MailMe
 
-def run_mailing_process(context, request, is_update):
+def run_mailing_process(context, url, is_update):
     subject = 'Leave Request - New'
     if is_update:
         subject = 'Leave Request - Updated'
@@ -27,16 +26,16 @@ def run_mailing_process(context, request, is_update):
             <div style="margin: 10px;">Optional Note: ${notes}</div>
             <div style="margin: 10px;">Optional Coverage: ${coverage}</div>
             <div style="margin: 10px;">
-                <a style="background-color:#2959af; color:white; display:inline-block; font-weight:bold; margin:10px; padding:5px 10px; text-decoration: none;" href="${link}">View Request</a>
-                <a style="background-color:#00ab00; color:white; display:inline-block; font-weight:bold; margin:10px; padding:5px 10px; text-decoration: none;" href="${approve_link}">Approve</a>
-                <a style="background-color:#ce0000; color:white; display:inline-block; font-weight:bold; margin:10px; padding:5px 10px; text-decoration: none;" href="${deny_link}">Deny</a>
+                <a style="background-color:#2959af; color:white; cursor: pointer; display:inline-block; font-weight:bold; margin:10px; padding:5px 10px; text-decoration: none;" href="${link}">View Request</a>
+                <a style="background-color:#00ab00; color:white; cursor: pointer; display:inline-block; font-weight:bold; margin:10px; padding:5px 10px; text-decoration: none;" href="${approve_link}">Approve</a>
+                <a style="background-color:#ce0000; color:white; cursor: pointer; display:inline-block; font-weight:bold; margin:10px; padding:5px 10px; text-decoration: none;" href="${deny_link}">Deny</a>
             </div>
         </div> 
     """
     body = body.replace('${timeoff}', TimeOffFormater(context.timeoff))
-    body = body.replace('${link}', context.absolute_url())
-    body = body.replace('${approve_link}', context.absolute_url() + '/leaverequest_workflow?no_redirect=1&status=1&token=' + context.UID())
-    body = body.replace('${deny_link}', context.absolute_url() + '/leaverequest_workflow?no_redirect=1&status=0&token=' + context.UID())
+    body = body.replace('${link}', url)
+    body = body.replace('${approve_link}', url + '/leaverequest_workflow?no_redirect=1&status=1&token=' + context.UID())
+    body = body.replace('${deny_link}', url + '/leaverequest_workflow?no_redirect=1&status=0&token=' + context.UID())
     body = body.replace('${notes}', context.description)
     body = body.replace('${coverage}', context.coverage)
     body = body.replace('${requestor}', context.title)
@@ -56,10 +55,6 @@ workflow_choices = SimpleVocabulary([
     SimpleTerm(value=u'pending', title=u'Pending'),
     SimpleTerm(value=u'denied', title=u'Denied'),
     SimpleTerm(value=u'approved', title=u'Approved'),
-])
-
-workflow_default = SimpleVocabulary([
-    SimpleTerm(value=u'pending', title=u'Pending'),
 ])
 
 def supervisors_choices(context):
@@ -89,14 +84,14 @@ class ILeaveRequest(model.Schema):
 
     title = schema.TextLine(
         title=u"Name",
-        required=False,
+        required=True,
         missing_value=u"",
         default=u"",
     )
         
     email = schema.TextLine(
         title=u"Email",
-        required=False,
+        required=True,
         missing_value=u"",
         default=u"",
     )
@@ -151,17 +146,16 @@ class ILeaveRequest(model.Schema):
 class AddForm(DefaultAddForm):
     portal_type = 'polklibrary.form.leaverequests.models.leaverequest'
 
-    def update(self):
-        DefaultAddForm.update(self)
-        timeoff = self.request.form.get('form.widgets.timeoff', u'')
-        saved = self.request.form.get('form.buttons.save', u'')
-        if timeoff and saved:
-            if not self.context.title or not self.context.email:
-                raise ValueError('Missing username or email, please contact web administrator.')
-            
-            self.context.workflow_status = u'pending'
-            run_mailing_process(self.context, self.request, False)
+    def add(self, obj):
+        DefaultAddForm.add(self, obj)
+        obj.workflow_status = u'pending'
+        obj.reindexObject()
         
+        url = "/".join([aq_inner(self.context).absolute_url(), obj.id])
+        
+        run_mailing_process(obj, url, False)
+        return obj
+    
 class AddView(DefaultAddView):
     form = AddForm
 
@@ -175,12 +169,10 @@ class EditForm(DefaultEditForm):
         saved = self.request.form.get('form.buttons.save', u'')
         if timeoff and saved:
             user = api.user.get_current()
-            if not self.context.title or not self.context.email:
-                raise ValueError('Missing username or email, please contact web administrator.')
             if user.getProperty('id') in self.context.listCreators():
                 self.context.workflow_status = u'pending'
                 self.context.reindexObject()
-            run_mailing_process(self.context, self.request, True)
+            run_mailing_process(self.context, self.context.absolute_url(), True)
             
             
         
