@@ -40,7 +40,7 @@ class LeaveFormView(BrowserView):
 
         
     def get_reviewers_content(self):
-        userid = unicode(api.user.get_current().getProperty("userid"))
+        userid = unicode(api.user.get_current().getProperty("id"))
         catalog = api.portal.get_tool(name='portal_catalog')
         brains = catalog.searchResults(
             portal_type='polklibrary.form.leaverequests.models.leaverequest',
