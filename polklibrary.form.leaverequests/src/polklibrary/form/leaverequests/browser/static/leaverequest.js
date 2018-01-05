@@ -5,9 +5,21 @@ var LeaveRequest = {
     IsAcademicStaff : false,
     
     Construct : function() {
+        this.PopulateFields();
         this.TimeSlotCloneable = this.MakeTimePicker();
         this.GetStaffStatus();
         this.Setup();
+    },
+    
+    PopulateFields : function() {
+        if ($.trim($('#form-widgets-title').val()) == '') {
+            var name = $('#leave-request-injection').attr('data-name');
+            $('#form-widgets-title').val(name);
+        }
+        if ($.trim($('#form-widgets-email').val()) == '') {
+            var email = $('#leave-request-injection').attr('data-email');
+            $('#form-widgets-email').val(email);
+        }
     },
     
     GetStaffStatus : function() {

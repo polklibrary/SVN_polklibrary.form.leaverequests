@@ -44,24 +44,6 @@ def run_mailing_process(context, request, is_update):
     MailMe(subject, [context.email], [context.supervisors], body)
 
     
-def get_name():
-    try:
-        return unicode(api.user.get_current().getProperty("fullname"))
-    except Exception as e:
-        print "ERROR get_name(): " + str(e)
-        return u""
-        
-def get_email():
-    try:
-        return unicode(api.user.get_current().getProperty('email'))
-    except Exception as e:
-        print "ERROR get_email(): " + str(e)
-        return u""
-
-def get_title():
-    return get_name() + u' - ' + datetime.now().strftime("%Y-%m-%dT%H:%M")
-
-
 leave_type_options = SimpleVocabulary([
     SimpleTerm(value=u'VA', title=u'Vacation'),
     SimpleTerm(value=u'SL', title=u'Sick Leave'),
@@ -70,17 +52,20 @@ leave_type_options = SimpleVocabulary([
     SimpleTerm(value=u'O', title=u'Other'),
 ])
 
-DEFAULT_WORKFLOW_CHOICE = u'pending'
 workflow_choices = SimpleVocabulary([
     SimpleTerm(value=u'pending', title=u'Pending'),
     SimpleTerm(value=u'denied', title=u'Denied'),
     SimpleTerm(value=u'approved', title=u'Approved'),
 ])
 
+workflow_default = SimpleVocabulary([
+    SimpleTerm(value=u'pending', title=u'Pending'),
+])
+
 def supervisors_choices(context):
     try:
         voc = []
-        email = get_email()
+        email = unicode(api.user.get_current().getProperty("email"))
         parent = context
         if context.portal_type == 'polklibrary.form.leaverequests.models.leaverequest':
             parent = context.aq_parent
@@ -103,20 +88,18 @@ directlyProvides(supervisors_choices, IContextSourceBinder)
 class ILeaveRequest(model.Schema):
 
     title = schema.TextLine(
-            title=u"Name",
-            required=True,
-            missing_value=u"",
-            default=get_name(),
-        )
+        title=u"Name",
+        required=False,
+        missing_value=u"",
+        default=u"",
+    )
         
     email = schema.TextLine(
         title=u"Email",
-        required=True,
+        required=False,
         missing_value=u"",
-        #readonly=True,
-        default=get_email(),
+        default=u"",
     )
-    
     
     timeoff = schema.Text(
         title=u"Time Off",
@@ -148,14 +131,13 @@ class ILeaveRequest(model.Schema):
         missing_value=u'',
     )
 
-
     directives.write_permission(workflow_status='cmf.ReviewPortalContent')
     workflow_status = schema.Choice(
         title=u"Request Status",
         source=workflow_choices,
-        required=True,
-        default=DEFAULT_WORKFLOW_CHOICE,
-        missing_value=DEFAULT_WORKFLOW_CHOICE,
+        required=False,
+        default='pending',
+        missing_value='pending',
     )
 
     gcal_event_id = schema.TextLine(
@@ -168,13 +150,16 @@ class ILeaveRequest(model.Schema):
         
 class AddForm(DefaultAddForm):
     portal_type = 'polklibrary.form.leaverequests.models.leaverequest'
-    
+
     def update(self):
         DefaultAddForm.update(self)
         timeoff = self.request.form.get('form.widgets.timeoff', u'')
         saved = self.request.form.get('form.buttons.save', u'')
         if timeoff and saved:
-            self.context.workflow_status = DEFAULT_WORKFLOW_CHOICE
+            if not self.context.title or not self.context.email:
+                raise ValueError('Missing username or email, please contact web administrator.')
+            
+            self.context.workflow_status = u'pending'
             run_mailing_process(self.context, self.request, False)
         
 class AddView(DefaultAddView):
@@ -190,8 +175,10 @@ class EditForm(DefaultEditForm):
         saved = self.request.form.get('form.buttons.save', u'')
         if timeoff and saved:
             user = api.user.get_current()
+            if not self.context.title or not self.context.email:
+                raise ValueError('Missing username or email, please contact web administrator.')
             if user.getProperty('id') in self.context.listCreators():
-                self.context.workflow_status = DEFAULT_WORKFLOW_CHOICE
+                self.context.workflow_status = u'pending'
                 self.context.reindexObject()
             run_mailing_process(self.context, self.request, True)
             

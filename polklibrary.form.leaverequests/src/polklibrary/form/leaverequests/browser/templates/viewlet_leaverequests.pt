@@ -1,4 +1,4 @@
-<div tal:condition="view/is_allowed">
+<div id="leave-request-injection" data-name="${view/get_name}" data-email="${view/get_email}" tal:condition="view/is_allowed">
     <link type="text/css" rel="stylesheet" href="${view/portal/absolute_url}/++resource++polklibrary.form.leaverequests/jquery-ui.structure.min.css" />
     <link type="text/css" rel="stylesheet" href="${view/portal/absolute_url}/++resource++polklibrary.form.leaverequests/jquery-ui.theme.min.css" />
     <link type="text/css" rel="stylesheet" href="${view/portal/absolute_url}/++resource++polklibrary.form.leaverequests/leaverequest.css" />
