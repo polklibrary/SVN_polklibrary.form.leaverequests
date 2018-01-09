@@ -83,14 +83,14 @@ directlyProvides(supervisors_choices, IContextSourceBinder)
 class ILeaveRequest(model.Schema):
 
     title = schema.TextLine(
-        title=u"Name",
+        title=u"Requesters Name",
         required=True,
         missing_value=u"",
         default=u"",
     )
         
     email = schema.TextLine(
-        title=u"Email",
+        title=u"Requesters Email",
         required=True,
         missing_value=u"",
         default=u"",
@@ -113,7 +113,7 @@ class ILeaveRequest(model.Schema):
     
     description = schema.TextLine(
         title=u"Note",
-        description=u"(Optional)",
+        description=u"(Optional) If you are submitting for another staff member, add your name here.",
         required=False,
         missing_value=u"",
         default=u"",
