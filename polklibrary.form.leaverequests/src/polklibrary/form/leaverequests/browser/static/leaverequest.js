@@ -128,6 +128,7 @@ var LeaveRequest = {
         
         var start = $(this.TimeSlotCloneable).clone(true);
         $(start).addClass('start').on('change', function(){
+            LeaveRequest.AutoSelectTime($(start).parent());
             LeaveRequest.Rewrite();
         });
         if (data_start != null)
@@ -213,7 +214,55 @@ var LeaveRequest = {
                 $(timepick).append( $('<option>').val(i + ':' + k + ' pm').html(i + ':' + k + ' pm') );
             }
         return timepick;
-    }
+    },
+    
+    AutoSelectTime : function(parent) {
+      
+        var duration = $(parent).find('input.durationpick').val();
+        
+        var dparts = duration.split('.');
+        var dhour = parseInt(dparts[0]);
+        var dminute = 0;
+        if (dparts.length > 1) {
+            if (dparts[1] == '25')
+                dminute = 15;
+            if (dparts[1] == '5')
+                dminute = 30;
+            if (dparts[1] == '75')
+                dminute = 45;
+        }
+        
+        var val = $(parent).find('select.timepick.start option:selected').val();
+        var parts = val.split(':');
+        var hour = parseInt(parts[0]);
+        parts = parts[1].split(' ');
+        var minutes = parseInt(parts[0]);
+        var ampm = parts[1];
+        
+        if (ampm == 'pm' && hour != 12)
+            hour += 12;
+        var date = new Date();
+        date.setHours(hour + dhour);
+        date.setMinutes(minutes + dminute);
+        console.log(date);
+            
+        var date_hour = date.getHours();
+        var date_mins = date.getMinutes();
+        console.log(date_hour);
+        console.log(date_mins);
+        var date_ampm = 'am';
+        if (date_hour > 11)
+            date_ampm = 'pm';
+        if (date_hour > 12)
+            date_hour -= 12;
+        if (date_mins < 10)
+            date_mins = '0' + date_mins;
+        
+        var target = date_hour + ':' + date_mins + ' ' + date_ampm;
+        $(parent).find('select.timepick.end option').each(function(i,e){
+            $(this).attr('selected', $(this).val() == target);
+        });
+    },
     
     
     

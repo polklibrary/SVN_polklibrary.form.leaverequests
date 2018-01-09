@@ -20,13 +20,15 @@ class LeaveFormView(BrowserView):
         return api.user.is_anonymous()
         
     def get_your_content(self):
+        limit = int(self.request.form.get('yourlimit', 25))
+        print limit
         userid = unicode(api.user.get_current().getProperty("id"))
         catalog = api.portal.get_tool(name='portal_catalog')
         brains = catalog.searchResults(
             portal_type='polklibrary.form.leaverequests.models.leaverequest',
             sort_on='created',
             sort_order='descending'
-        )
+        )[:limit]
         data = []
         for brain in brains:
             if userid == brain.Creator:
@@ -35,18 +37,18 @@ class LeaveFormView(BrowserView):
                     'workflow_status' : brain.workflow_status.capitalize(),
                     'url' : brain.getURL(),
                 })
-        
         return data
 
         
     def get_reviewers_content(self):
+        limit = int(self.request.form.get('stafflimit', 25))
         userid = unicode(api.user.get_current().getProperty("id"))
         catalog = api.portal.get_tool(name='portal_catalog')
         brains = catalog.searchResults(
             portal_type='polklibrary.form.leaverequests.models.leaverequest',
             sort_on='created',
             sort_order='descending'
-        )
+        )[:limit]
         data = []
         for brain in brains:
             if userid in brain.supervisors:
@@ -56,7 +58,6 @@ class LeaveFormView(BrowserView):
                     'workflow_status' : brain.workflow_status.capitalize(),
                     'url' : brain.getURL(),
                 })
-        
         return data
 
         

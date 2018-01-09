@@ -12,52 +12,6 @@
     </metal:content-title>
 	<metal:content-description fill-slot="content-description"></metal:content-description>
 
-    
-	<metal:block fill-slot="javascript_head_slot">
-        <script type="text/javascript">
-            var INCREMENT = 10;
-            var ShowYourRequests = 0;
-            var ShowYourReviews = 0;
-            
-            $(document).ready(function(){
-                
-                var ShowNextYourRequests = function(){
-                    ShowYourRequests += INCREMENT;
-                    $('a.your-requests').each(function(i,e){
-                        console.log(i);
-                        if (i < ShowYourRequests)
-                            $(e).show();
-                        else
-                            $(e).hide();
-                    });
-                }
-                
-                var ShowNextYourReviews = function(){
-                    ShowYourReviews += INCREMENT;
-                    $('a.your-reviews').each(function(i,e){
-                        console.log(i);
-                        if (i < ShowYourReviews)
-                            $(e).show();
-                        else
-                            $(e).hide();
-                    });
-                }
-                
-                ShowNextYourRequests();
-                $('#showmore-your-requests').click(function(){
-                    ShowNextYourRequests();
-                });
-                
-                
-                ShowNextYourReviews();
-                $('#showmore-your-reviews').click(function(){
-                    ShowNextYourReviews();
-                });
-                
-            });
-            
-        </script>
-	</metal:block>
 
     
 	<metal:block fill-slot="style_slot">
@@ -66,6 +20,9 @@
                 padding: 10px;
             }
         
+            #leaverequest-form h3{
+                margin-bottom: 10px;
+            }
             #leaverequest-form .request-data a {
                 border: 1px solid #ccc;
                 display: block;
@@ -92,6 +49,8 @@
                 color: #2385c4;
                 cursor: pointer;
                 font-style: italic;
+                border: 0px none !important;
+                background-color: transparent !important;
             }
             #leaverequest-form .submit-leaverequest{
                 background-color: #1072b1;
@@ -116,32 +75,32 @@
                 <div class="col-100 tc" tal:condition="not:view/is_anonymous">
                     <a class="submit-leaverequest" href="${context/absolute_url}/++add++polklibrary.form.leaverequests.models.leaverequest">Submit Leave Request</a>
                 </div>
-                <div class="request-data col-50">
+                <div class="request-data col-50" tal:define="your_content view/get_your_content; yourlimit python:len(your_content)+25">
                     <div class="column-outer">
                         <h3>Your leave requests</h3>
                     
-                        <a class="your-requests" tal:repeat="item view/get_your_content" href="${item/url}">
+                        <a class="your-requests" tal:repeat="item your_content" href="${item/url}">
                             <span>
                                 ${item/workflow_status}
                             </span>
                             <span tal:content="structure item/info"></span>
                         </a>
-                        <span id="showmore-your-requests">(Show more)</span>
+                        <a id="showmore-your-requests" href="${context/absolute_url}?yourlimit=${yourlimit}">(Show more)</a>
                     </div>
                 </div>
                 
-                <div class="request-data col-50" tal:condition="view/is_reviewer">
+                <div class="request-data col-50" tal:condition="view/is_reviewer"  tal:define="staff_content view/get_reviewers_content; stafflimit python:len(staff_content)+25">
                     <div class="column-outer">
                     
-                        <h3>Your pending approvals</h3>
+                        <h3>Your staff requests</h3>
                     
-                        <a class="your-reviews" tal:repeat="item view/get_reviewers_content" href="${item/url}">
+                        <a class="your-reviews" tal:repeat="item staff_content" href="${item/url}">
                             <span>
                                 ${item/workflow_status}
                             </span>
                             <span> requested by ${item/creator}</span>
                         </a>
-                        <span id="showmore-your-reviews">(Show more)</span>
+                        <a id="showmore-your-reviews" href="${context/absolute_url}?stafflimit=${stafflimit}">(Show more)</a>
                     </div>
                 </div>
             </div>
