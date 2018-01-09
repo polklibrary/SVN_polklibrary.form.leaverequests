@@ -69,8 +69,6 @@
 
         <div id="leaverequest-form">
             
-            
-            
             <div class="column">
                 <div class="col-100 tc" tal:condition="not:view/is_anonymous">
                     <a class="submit-leaverequest" href="${context/absolute_url}/++add++polklibrary.form.leaverequests.models.leaverequest">Submit Leave Request</a>

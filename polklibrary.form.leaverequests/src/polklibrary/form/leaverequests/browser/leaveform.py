@@ -61,10 +61,22 @@ class LeaveFormView(BrowserView):
         return data
 
         
-    def is_reviewer(self):
-        roles = api.user.get_current().getRolesInContext(self.context)
-        return 'Manager' in roles or 'Reviewer' in roles
         
+    def is_reviewer(self):
+        #userid = unicode(api.user.get_current().getProperty("userid"))
+        user = api.user.get_current()
+        roles = user.getRolesInContext(self.context)
+        userid = unicode(user.getProperty("id"))
+        
+        is_supervisor = False
+        supervisor_list = self.context.supervisors.split('\n')
+        for s in supervisor_list:
+            supervisors = s.split('|')
+            if userid in supervisors[1]:
+                is_supervisor = True
+        
+        return ('Manager' in roles or 'Reviewer' in roles) and is_supervisor # and userid in self.context.supervisors
+      
         
     @property
     def portal(self):

@@ -134,7 +134,7 @@
                     
                     <a tal:condition="view/is_reviewer" class="approve" href="${context/absolute_url}/leaverequest_workflow?status=1&token=${context/UID}">Approve</a>
                     <a tal:condition="view/is_reviewer" class="deny" href="${context/absolute_url}/leaverequest_workflow?status=0&token=${context/UID}">Deny</a>
-                    <span> | </span>
+                    <span tal:condition="view/is_reviewer"> | </span>
                     <a class="edit" href="${context/absolute_url}/edit">Edit</a>
                     <a id="delete-request" class="deny" href="#">Delete</a>
                     
