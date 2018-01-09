@@ -57,8 +57,19 @@ class LeaveRequestView(BrowserView):
         
     def is_reviewer(self):
         #userid = unicode(api.user.get_current().getProperty("userid"))
-        roles = api.user.get_current().getRolesInContext(self.context)
-        return ('Manager' in roles or 'Reviewer' in roles) # and userid in self.context.supervisors
+        user = api.user.get_current()
+        roles = user.getRolesInContext(self.context)
+        userid = unicode(user.getProperty("id"))
+        parent = self.context.aq_parent
+        
+        is_supervisor = False
+        supervisor_list = parent.supervisors.split('\n')
+        for s in supervisor_list:
+            supervisors = s.split('|')
+            if userid in supervisors[1]:
+                is_supervisor = True
+        
+        return ('Manager' in roles or 'Reviewer' in roles) and is_supervisor # and userid in self.context.supervisors
       
     def status(self):
         if self.context.workflow_status == 'approved':
