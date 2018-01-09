@@ -8,10 +8,14 @@ select.leavepick{
    margin: 0 10px !important;
    width: 190px  !important;
 }
+
 select.timepick {
    display: inline-block !important;
    margin: 0 10px !important;
    width: 115px !important; 
+}
+select.timepick option[disabled]{
+   background-color: #ddd;
 }
 input.durationpick {
    border: 1px solid #ccc;

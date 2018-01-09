@@ -12,6 +12,19 @@
     </metal:content-title>
 	<metal:content-description fill-slot="content-description"></metal:content-description>
 
+	<metal:block fill-slot="javascript_head_slot">
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#delete-request').click(function(){
+                    if (confirm('Are you sure you want to remove this request?'))
+                        document.location = $('body').attr('data-base-url') + '?form.delete=1';
+                    else 
+                        document.location = $('body').attr('data-base-url');
+                });
+            });
+        </script>  
+	</metal:block>
+    
     
 	<metal:block fill-slot="style_slot">
         <style>
@@ -121,7 +134,9 @@
                     
                     <a tal:condition="view/is_reviewer" class="approve" href="${context/absolute_url}/leaverequest_workflow?status=1&token=${context/UID}">Approve</a>
                     <a tal:condition="view/is_reviewer" class="deny" href="${context/absolute_url}/leaverequest_workflow?status=0&token=${context/UID}">Deny</a>
+                    <span> | </span>
                     <a class="edit" href="${context/absolute_url}/edit">Edit</a>
+                    <a id="delete-request" class="deny" href="#">Delete</a>
                     
                     <div class="requestinfo">
                     (Note: Editing a request will revert it to "Pending")

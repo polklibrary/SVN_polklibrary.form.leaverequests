@@ -13,6 +13,7 @@ class LeaveFormView(BrowserView):
     template = ViewPageTemplateFile("templates/leaveform_view.pt")
     
     def __call__(self):
+    
         return self.template()
 
     @property
@@ -21,7 +22,6 @@ class LeaveFormView(BrowserView):
         
     def get_your_content(self):
         limit = int(self.request.form.get('yourlimit', 25))
-        print limit
         userid = unicode(api.user.get_current().getProperty("id"))
         catalog = api.portal.get_tool(name='portal_catalog')
         brains = catalog.searchResults(

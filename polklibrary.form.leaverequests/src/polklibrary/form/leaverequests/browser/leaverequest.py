@@ -1,9 +1,12 @@
 from plone import api
 from plone.i18n.normalizer import idnormalizer
+from plone.protect.interfaces import IDisableCSRFProtection
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility, getMultiAdapter
 from zope.container.interfaces import INameChooser
+from zope.interface import alsoProvides
+from polklibrary.form.leaverequests.utility import AddEventToGCAL, DeleteEventToGCAL, MailMe
 import random, time, transaction
 
 def TimeOffFormater(timeoff):
@@ -37,6 +40,19 @@ class LeaveRequestView(BrowserView):
     template = ViewPageTemplateFile("templates/leaverequest_view.pt")
     
     def __call__(self):
+        alsoProvides(self.request, IDisableCSRFProtection)
+        if self.request.form.get('form.delete', None):
+            with api.env.adopt_roles(roles=['Manager']):
+                if self.context.gcal_event_id: # remove all events that might exist
+                    events = self.context.gcal_event_id.split('|')
+                    for event in events:
+                        DeleteEventToGCAL(event)
+                    self.context.gcal_event_id = u''
+                
+                parent = self.context.aq_parent
+                parent.manage_delObjects([self.context.getId()])
+                return self.request.response.redirect(parent.absolute_url());
+                
         return self.template()
         
     def is_reviewer(self):

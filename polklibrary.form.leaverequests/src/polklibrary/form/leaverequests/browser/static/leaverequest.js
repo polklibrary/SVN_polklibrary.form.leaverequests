@@ -109,7 +109,8 @@ var LeaveRequest = {
             $(duration).val(data_duration);
         $(duration).on('change', function(){
             var v = $(this).val();
-            if (LeaveRequest.IsAcademicStaff == true && (v != 8 || v != 4)) {
+            console.log(v);
+            if (LeaveRequest.IsAcademicStaff == true && !(v == '8' || v == '4')) {
                 alert('Academic Staff can only takes time off in increments of 4 hours');
                 if (v < 4)
                     $(this).val(4);
@@ -200,7 +201,7 @@ var LeaveRequest = {
             for(var j = 0; j < 59; j+=15) {
                 k = j + '';
                 if (j == 0) k = '00';
-                $(timepick).append( $('<option>').attr('selected', i == 8 && j == 0).val(i + ':' + k + ' am').html(i + ':' + k + ' am') );
+                $(timepick).append( $('<option>').attr('selected', i == 6 && j == 0).val(i + ':' + k + ' am').html(i + ':' + k + ' am') );
             }
             
         $(timepick).append( $('<option>').val('12:00 pm').html('12:00 pm') );
@@ -259,8 +260,19 @@ var LeaveRequest = {
             date_mins = '0' + date_mins;
         
         var target = date_hour + ':' + date_mins + ' ' + date_ampm;
+        var target_found = false;
         $(parent).find('select.timepick.end option').each(function(i,e){
-            $(this).attr('selected', $(this).val() == target);
+            
+            if (!target_found)
+                $(this).prop('disabled', true);
+            else
+                $(this).prop('disabled', false);
+            
+            if ( $(this).val() == target) {
+                target_found = true;
+                $(this).attr('selected', true);
+            }
+            
         });
     },
     
