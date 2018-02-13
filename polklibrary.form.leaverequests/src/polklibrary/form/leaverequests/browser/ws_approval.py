@@ -49,7 +49,14 @@ class WSView(BrowserView):
                     for day in days:
                         data = day.split(u'|')
                         resp = AddEventToGCAL(obj.title, data[1], data[2], data[0], data[3], data[4])
-                        ids.append(resp['response']['id'])
+                        if(resp['status']) == 200:
+                            ids.append(resp['response']['id'])
+                        else:
+                            # retry again
+                            time.sleep(1)
+                            resp = AddEventToGCAL(obj.title, data[1], data[2], data[0], data[3], data[4])
+                            if(resp['status']) == 200:
+                                ids.append(resp['response']['id'])
                     obj.gcal_event_id = u'|'.join(ids)
                 obj.reindexObject()
                     

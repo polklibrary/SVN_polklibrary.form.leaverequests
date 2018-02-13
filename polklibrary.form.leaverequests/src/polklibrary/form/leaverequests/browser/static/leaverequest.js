@@ -150,10 +150,10 @@ var LeaveRequest = {
         
         $(div).append(datepick)
               .append(leavepick)
-              .append('<span> time taken </span>')
+              .append('<span>time taken</span>')
               .append(duration)
-              .append('<span> out from </span>')
-              .append(start).append('<span> to </span>')
+              .append('<span>hour(s).  Out from</span>')
+              .append(start).append('<span>to</span>')
               .append(end);
         if (delete_option) 
             $(div).append(btn);
