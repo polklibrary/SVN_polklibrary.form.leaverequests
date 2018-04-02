@@ -15,19 +15,17 @@ import random, time, transaction, json
 class WSView(BrowserView):
     
     def __call__(self):
-        data = {
-            'is_academic_staff' : False
-        }
+        data = []
         #with api.env.adopt_roles(roles=['Manager']):
         catalog = api.portal.get_tool(name='portal_catalog')
         brains = catalog.searchResults(
             portal_type='polklibrary.form.leaverequests.models.leaveform'
         )
+        
         if brains:
             obj = brains[0].getObject()
-            userid = unicode(api.user.get_current().getProperty("id"))
-            data['is_academic_staff'] = userid in obj.academic_staff
-            
+            for user in obj.academic_staff.replace('\r','').split('\n'):
+                data.append(user)
         return json.dumps(data)
         
     @property

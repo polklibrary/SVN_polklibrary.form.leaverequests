@@ -46,7 +46,8 @@ def run_mailing_process(context, url, is_update):
 leave_type_options = SimpleVocabulary([
     SimpleTerm(value=u'VA', title=u'Vacation'),
     SimpleTerm(value=u'SL', title=u'Sick Leave'),
-    SimpleTerm(value=u'FH', title=u'Floating/Legal Holiday'),
+    SimpleTerm(value=u'PH', title=u'Personal Holiday'),
+    SimpleTerm(value=u'FH', title=u'Personal/Floating Holiday'),
     SimpleTerm(value=u'CT', title=u'Comp Time (University Staff Only)'),
     SimpleTerm(value=u'O', title=u'Other'),
 ])

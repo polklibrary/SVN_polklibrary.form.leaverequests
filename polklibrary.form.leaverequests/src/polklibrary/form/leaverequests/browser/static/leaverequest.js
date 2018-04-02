@@ -3,6 +3,7 @@ var LeaveRequest = {
     
     TimeSlotCloneable : null,
     IsAcademicStaff : false,
+    AcademicStaffList : [],
     
     Construct : function() {
         this.PopulateFields();
@@ -20,21 +21,49 @@ var LeaveRequest = {
             var email = $('#leave-request-injection').attr('data-email');
             $('#form-widgets-email').val(email);
         }
+        
+        // if new email entered.
+        $('#form-widgets-email').change(function(){
+            LeaveRequest.CheckAcademicStaffStatus();
+        });
     },
     
     GetStaffStatus : function() {
         var url = $('body').attr('data-portal-url') + '/get_stafftype?nocache=' + new Date().getTime();
         $.getJSON(url, function(response){
-            LeaveRequest.IsAcademicStaff = response.is_academic_staff;
-            if (LeaveRequest.IsAcademicStaff){
-                $('input[type="number"]').attr({
-                    'step':'4',
-                    'min':'0',
-                    'max':'8',
-                    'value':'4'
-                });
-            }
+            LeaveRequest.AcademicStaffList = response;
+            LeaveRequest.CheckAcademicStaffStatus();
+            // if (LeaveRequest.IsAcademicStaff){
+                // $('input[type="number"]').attr({
+                    // 'step':'4',
+                    // 'min':'0',
+                    // 'max':'8',
+                    // 'value':'4'
+                // });
+            // }
         });
+    },
+    
+    CheckAcademicStaffStatus : function() {
+        var email = $('#form-widgets-email').val();
+        email = email.split('@')[0];
+        if ( LeaveRequest.AcademicStaffList.indexOf(email) > -1) {
+            $('input[type="number"]').attr({
+                'step':'4',
+                'min':'0',
+                'max':'8',
+                'value':'4'
+            });
+        }
+        else {
+            $('input[type="number"]').attr({
+                'step':'0.25',
+                'min':'0',
+                'max':'8',
+                'value':'1'
+            });
+        }
+        
     },
     
     Setup : function() {
@@ -167,7 +196,9 @@ var LeaveRequest = {
         var min = 0;
         var max = 8;
         var value = 1;
-        if(LeaveRequest.IsAcademicStaff){
+        var email = $('#form-widgets-email').val();
+        email = email.split('@')[0];
+        if ( LeaveRequest.AcademicStaffList.indexOf(email) > -1) {
             step = 4;
             min = 0;
             max = 8;
@@ -181,6 +212,7 @@ var LeaveRequest = {
         var leavepick = $('<select>').addClass('leavepick');
         $(leavepick).append( $('<option>').val('VA').html('Vacation') );
         $(leavepick).append( $('<option>').val('SL').html('Sick Leave') );
+        $(leavepick).append( $('<option>').val('PH').html('Personal Holiday') );
         $(leavepick).append( $('<option>').val('FH').html('Floating/Legal Holiday') );
         $(leavepick).append( $('<option>').val('CT').html('Comp Time (University Staff Only)') );
         $(leavepick).append( $('<option>').val('O').html('Other') );
