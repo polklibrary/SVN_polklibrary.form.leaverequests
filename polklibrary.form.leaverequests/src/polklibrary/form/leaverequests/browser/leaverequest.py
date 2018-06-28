@@ -61,8 +61,7 @@ class LeaveRequestView(BrowserView):
         #userid = unicode(api.user.get_current().getProperty("userid"))
         user = api.user.get_current()
         roles = user.getRolesInContext(self.context)
-        #userid = unicode(user.getProperty("id"))
-        userid = unicode(user.getProperty("email")).replace(u"@uwosh.edu",u"")
+        userid = unicode(user.getProperty("id"))
         parent = self.context.aq_parent
         
         is_supervisor = False

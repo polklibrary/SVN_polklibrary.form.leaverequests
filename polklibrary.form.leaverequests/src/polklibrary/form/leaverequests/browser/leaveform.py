@@ -8,6 +8,9 @@ import random, time, transaction
 
 from polklibrary.form.leaverequests.browser.leaverequest import TimeOffFormater
 
+import logging
+logger = logging.getLogger("Plone")
+
 class LeaveFormView(BrowserView):
 
     template = ViewPageTemplateFile("templates/leaveform_view.pt")
@@ -22,8 +25,10 @@ class LeaveFormView(BrowserView):
         
     def get_your_content(self):
         limit = int(self.request.form.get('yourlimit', 25))
-        #userid = unicode(api.user.get_current().getProperty("id"))
-        userid = unicode(api.user.get_current().getProperty("email")).replace(u"@uwosh.edu",u"")
+        userid = unicode(api.user.get_current().getProperty("id"))
+        
+        logger.info("userid: " + userid + " email:" + unicode(api.user.get_current().getProperty("email")))
+        
         catalog = api.portal.get_tool(name='portal_catalog')
         brains = catalog.searchResults(
             portal_type='polklibrary.form.leaverequests.models.leaverequest',
@@ -43,8 +48,8 @@ class LeaveFormView(BrowserView):
         
     def get_reviewers_content(self):
         limit = int(self.request.form.get('stafflimit', 25))
-        #userid = unicode(api.user.get_current().getProperty("id"))
-        userid = unicode(api.user.get_current().getProperty("email")).replace(u"@uwosh.edu",u"")
+        userid = unicode(api.user.get_current().getProperty("id"))
+        #userid = unicode(api.user.get_current().getProperty("email")).replace(u"@uwosh.edu",u"")
         catalog = api.portal.get_tool(name='portal_catalog')
         brains = catalog.searchResults(
             portal_type='polklibrary.form.leaverequests.models.leaverequest',
