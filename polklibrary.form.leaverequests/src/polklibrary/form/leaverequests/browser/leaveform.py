@@ -8,6 +8,8 @@ import random, time, transaction
 
 from polklibrary.form.leaverequests.browser.leaverequest import TimeOffFormater
 
+import logging
+logger = logging.getLogger("Plone")
 
 class LeaveFormView(BrowserView):
 
@@ -29,10 +31,15 @@ class LeaveFormView(BrowserView):
         brains = catalog.searchResults(
             portal_type='polklibrary.form.leaverequests.models.leaverequest',
             sort_on='created',
-            sort_order='descending'
+            sort_order='descending',
+            Creator=userid
         )[:limit]
+        
+        logger.info("REQUEST BRAINS: " + str(len(brains)) + " userid: " + userid)
+        
         data = []
         for brain in brains:
+            logger.info("Brain: " + str((userid == brain.Creator)) + " userid: " + userid + " Creator: " + brain.Creator)
             if userid == brain.Creator:
                 data.append({
                     'info' : TimeOffFormater(brain.timeoff),
