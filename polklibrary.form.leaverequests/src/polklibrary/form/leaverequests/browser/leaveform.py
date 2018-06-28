@@ -35,17 +35,13 @@ class LeaveFormView(BrowserView):
             Creator=userid
         )[:limit]
         
-        logger.info("REQUEST BRAINS: " + str(len(brains)) + " userid: " + userid)
-        
         data = []
         for brain in brains:
-            logger.info("Brain: " + str((userid == brain.Creator)) + " userid: " + userid + " Creator: " + brain.Creator)
-            if userid == brain.Creator:
-                data.append({
-                    'info' : TimeOffFormater(brain.timeoff),
-                    'workflow_status' : brain.workflow_status.capitalize(),
-                    'url' : brain.getURL(),
-                })
+            data.append({
+                'info' : TimeOffFormater(brain.timeoff),
+                'workflow_status' : brain.workflow_status.capitalize(),
+                'url' : brain.getURL(),
+            })
         return data
 
         
