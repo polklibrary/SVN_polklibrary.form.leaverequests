@@ -80,7 +80,7 @@ def AddEventToGCAL(name, leave, duration, date, start, end):
         service = discovery.build('calendar', 'v3', http=http)
         
         result = service.events().insert(
-            calendarId = 'qkkjn49i0bksj786kk1mgiu0vs@group.calendar.google.com', 
+            calendarId = 'qkkjn49i0bksj786kk1mgiu0vs@group.calendar.google.com',
             body = req, 
             sendNotifications=None, 
             supportsAttachments=None, 
@@ -113,7 +113,7 @@ def DeleteEventToGCAL(id):
         service = discovery.build('calendar', 'v3', http=http)
         
         result = service.events().delete(
-            calendarId = 'libraryoffice@uwosh.edu', 
+            calendarId = 'qkkjn49i0bksj786kk1mgiu0vs@group.calendar.google.com', 
             eventId = id, 
         ).execute()
         
