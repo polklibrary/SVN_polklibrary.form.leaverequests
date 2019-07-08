@@ -40,7 +40,11 @@ def run_mailing_process(context, url, is_update):
     body = body.replace('${coverage}', context.coverage)
     body = body.replace('${requestor}', context.title)
     
-    MailMe(subject, [context.email], [context.supervisors], body)
+    print '------------------------------------------------------------'
+    print [context.supervisors]
+    print context.email
+    
+    MailMe(subject, context.email, [context.supervisors], body)
 
     
 leave_type_options = SimpleVocabulary([
