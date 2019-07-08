@@ -214,7 +214,8 @@ var LeaveRequest = {
         $(leavepick).append( $('<option>').val('SL').html('Sick Leave') );
         $(leavepick).append( $('<option>').val('PH').html('Personal Holiday') );
         $(leavepick).append( $('<option>').val('FH').html('Floating/Legal Holiday') );
-        $(leavepick).append( $('<option>').val('CT').html('Comp Time (University Staff Only)') );
+        $(leavepick).append( $('<option>').val('CT').html('Comp Time') );
+        $(leavepick).append( $('<option>').val('TRAVEL').html('Travel') );
         $(leavepick).append( $('<option>').val('O').html('Other') );
         return leavepick;
     },

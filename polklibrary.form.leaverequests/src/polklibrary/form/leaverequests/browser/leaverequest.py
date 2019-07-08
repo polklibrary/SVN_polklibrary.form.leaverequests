@@ -27,6 +27,8 @@ def TimeOffFormater(timeoff):
             leave = 'Vacation'
         if opts[1] == 'CT':
             leave = 'Comp Time'
+        if opts[1] == 'TRAVEL':
+            leave = 'Travel'
         
         off += '(' + opts[2] + ') ' + leave + '&nbsp;&nbsp;&nbsp;&nbsp;'
         off += opts[0]

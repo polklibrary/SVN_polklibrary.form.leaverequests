@@ -70,6 +70,7 @@
         <div id="leaverequest-form">
             
             <div class="column">
+
                 <div class="col-100 tc" tal:condition="not:view/is_anonymous">
                     <a class="submit-leaverequest" href="${context/absolute_url}/++add++polklibrary.form.leaverequests.models.leaverequest">Submit Leave Request</a>
                 </div>
@@ -101,6 +102,12 @@
                         <a id="showmore-your-reviews" href="${context/absolute_url}?stafflimit=${stafflimit}">(Show more)</a>
                     </div>
                 </div>
+                
+                <div class="col-100">
+                    <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FChicago&amp;src=cWtram40OWkwYmtzajc4NmtrMW1naXUwdnNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%234285F4&amp;mode=WEEK&amp;showPrint=0&amp;showNav=1&amp;showTabs=1&amp;showCalendars=0&amp;showTz=0" style="border-width:0; width:100%; height: 600px;" frameborder="0" scrolling="no"></iframe>
+                </div>
+            
+                            
             </div>
             
             

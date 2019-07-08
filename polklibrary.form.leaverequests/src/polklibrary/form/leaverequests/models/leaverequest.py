@@ -49,6 +49,7 @@ leave_type_options = SimpleVocabulary([
     SimpleTerm(value=u'PH', title=u'Personal Holiday'),
     SimpleTerm(value=u'FH', title=u'Personal/Floating Holiday'),
     SimpleTerm(value=u'CT', title=u'Comp Time (University Staff Only)'),
+    SimpleTerm(value=u'TRAVEL', title=u'Travel'),
     SimpleTerm(value=u'O', title=u'Other'),
 ])
 

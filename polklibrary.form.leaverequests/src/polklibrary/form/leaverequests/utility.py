@@ -11,7 +11,7 @@ from plone.registry.interfaces import IRegistry
 import datetime,json,urllib,pytz,smtplib
 
 
-GCAL_KEY = '/opt/plone/plone-5-zeo-0/zeocluster/liboff.google.private.key'
+GCAL_KEY = '/opt/plone/plone-5-zeo-0/zeocluster/polkservices.google.private.key'
 #GCAL_KEY = '/home/vagrant/Plone/zinstance/liboff.google.private.key'
 
 
@@ -51,24 +51,24 @@ def AddEventToGCAL(name, leave, duration, date, start, end):
             'summary': name + ' - ' + leave + ' ' + duration,
             'description': '',
     }
-    if float(duration) < 7:
-        start_date = iso_format(datetime.datetime.strptime(date + ' ' + start.upper(), '%m/%d/%Y %I:%M %p'))
-        end_date = iso_format(datetime.datetime.strptime(date + ' ' + end.upper(), '%m/%d/%Y %I:%M %p'))
-        req['start'] = {
-            'dateTime': start_date,
-        }
-        req['end'] = {
-            'dateTime': end_date,
-        }
-    else:
-        start_date = datetime.datetime.strftime(datetime.datetime.strptime(date + ' ' + start.upper(), '%m/%d/%Y %I:%M %p'), '%Y-%m-%d')
-        end_date = datetime.datetime.strftime(datetime.datetime.strptime(date + ' ' + end.upper(), '%m/%d/%Y %I:%M %p'), '%Y-%m-%d')
-        req['start'] = {
-            'date': start_date,
-        }
-        req['end'] = {
-            'date': end_date,
-        }
+    # if float(duration) < 7:
+    start_date = iso_format(datetime.datetime.strptime(date + ' ' + start.upper(), '%m/%d/%Y %I:%M %p'))
+    end_date = iso_format(datetime.datetime.strptime(date + ' ' + end.upper(), '%m/%d/%Y %I:%M %p'))
+    req['start'] = {
+        'dateTime': start_date,
+    }
+    req['end'] = {
+        'dateTime': end_date,
+    }
+    # else:
+        # start_date = datetime.datetime.strftime(datetime.datetime.strptime(date + ' ' + start.upper(), '%m/%d/%Y %I:%M %p'), '%Y-%m-%d')
+        # end_date = datetime.datetime.strftime(datetime.datetime.strptime(date + ' ' + end.upper(), '%m/%d/%Y %I:%M %p'), '%Y-%m-%d')
+        # req['start'] = {
+            # 'date': start_date,
+        # }
+        # req['end'] = {
+            # 'date': end_date,
+        # }
         
     try:
         scopes = ['https://www.googleapis.com/auth/calendar']
@@ -80,7 +80,7 @@ def AddEventToGCAL(name, leave, duration, date, start, end):
         service = discovery.build('calendar', 'v3', http=http)
         
         result = service.events().insert(
-            calendarId = 'libraryoffice@uwosh.edu', 
+            calendarId = 'qkkjn49i0bksj786kk1mgiu0vs@group.calendar.google.com', 
             body = req, 
             sendNotifications=None, 
             supportsAttachments=None, 
