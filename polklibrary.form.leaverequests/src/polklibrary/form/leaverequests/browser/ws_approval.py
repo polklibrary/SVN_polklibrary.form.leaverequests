@@ -7,7 +7,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility, getMultiAdapter
 from zope.container.interfaces import INameChooser
 from plone.app.uuid.utils import uuidToObject
-from polklibrary.form.leaverequests.utility import AddEventToGCAL, DeleteEventToGCAL, MailMe, AddEventMailed
+from polklibrary.form.leaverequests.utility import MailMe, AddEventMailed
 from polklibrary.form.leaverequests.browser.leaverequest import TimeOffFormater
 import random, time, transaction
 

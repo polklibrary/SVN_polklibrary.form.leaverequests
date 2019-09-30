@@ -1,8 +1,5 @@
-from apiclient import discovery
-from httplib2 import Http
 from plone import api
 from Products.Five import BrowserView
-from oauth2client.service_account import ServiceAccountCredentials
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from zope.component import getUtility
@@ -102,87 +99,3 @@ def DeleteEventMailed(UID, RequestedBy, ApprovedBy, TimeOff):
 
     
     
-def AddEventToGCAL(name, leave, duration, date, start, end):
-    response = {
-        'status' : 400,
-        'response' : None,
-    }
-    
-    req = {
-            'summary': name + ' - ' + leave + ' ' + duration,
-            'description': '',
-    }
-    # if float(duration) < 7:
-    start_date = iso_format(datetime.datetime.strptime(date + ' ' + start.upper(), '%m/%d/%Y %I:%M %p'))
-    end_date = iso_format(datetime.datetime.strptime(date + ' ' + end.upper(), '%m/%d/%Y %I:%M %p'))
-    req['start'] = {
-        'dateTime': start_date,
-    }
-    req['end'] = {
-        'dateTime': end_date,
-    }
-    # else:
-        # start_date = datetime.datetime.strftime(datetime.datetime.strptime(date + ' ' + start.upper(), '%m/%d/%Y %I:%M %p'), '%Y-%m-%d')
-        # end_date = datetime.datetime.strftime(datetime.datetime.strptime(date + ' ' + end.upper(), '%m/%d/%Y %I:%M %p'), '%Y-%m-%d')
-        # req['start'] = {
-            # 'date': start_date,
-        # }
-        # req['end'] = {
-            # 'date': end_date,
-        # }
-        
-    try:
-        scopes = ['https://www.googleapis.com/auth/calendar']
-        credentials = ServiceAccountCredentials.from_json_keyfile_name(
-            GCAL_KEY,
-            scopes=scopes
-        )
-        http = credentials.authorize(Http())
-        service = discovery.build('calendar', 'v3', http=http)
-        
-        result = service.events().insert(
-            calendarId = 'qkkjn49i0bksj786kk1mgiu0vs@group.calendar.google.com',
-            body = req, 
-            sendNotifications=None, 
-            supportsAttachments=None, 
-            maxAttendees=None
-        ).execute()
-        
-        response['status'] = 200
-        response['response'] = result
-        return response
-        
-    except Exception as e:
-        import traceback
-        print traceback.format_exc()
-        return response
-
-   
-def DeleteEventToGCAL(id):
-    response = {
-        'status' : 400,
-        'response' : None,
-    }
-    
-    try:
-        scopes = ['https://www.googleapis.com/auth/calendar']
-        credentials = ServiceAccountCredentials.from_json_keyfile_name(
-            GCAL_KEY,
-            scopes=scopes
-        )
-        http = credentials.authorize(Http())
-        service = discovery.build('calendar', 'v3', http=http)
-        
-        result = service.events().delete(
-            calendarId = 'qkkjn49i0bksj786kk1mgiu0vs@group.calendar.google.com', 
-            eventId = id, 
-        ).execute()
-        
-        response['status'] = 200
-        response['response'] = result
-        return response
-        
-    except Exception as e:
-        import traceback
-        print traceback.format_exc()
-        return response  

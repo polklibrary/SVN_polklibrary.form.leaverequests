@@ -6,7 +6,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility, getMultiAdapter
 from zope.container.interfaces import INameChooser
 from zope.interface import alsoProvides
-from polklibrary.form.leaverequests.utility import AddEventToGCAL, DeleteEventToGCAL, MailMe, DeleteEventMailed
+from polklibrary.form.leaverequests.utility import MailMe, DeleteEventMailed
 import random, time, transaction
 
 def TimeOffFormater(timeoff):
