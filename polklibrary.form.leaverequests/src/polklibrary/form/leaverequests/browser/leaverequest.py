@@ -62,10 +62,9 @@ class LeaveRequestView(BrowserView):
         return self.template()
         
     def is_reviewer(self):
-        #userid = unicode(api.user.get_current().getProperty("userid"))
         user = api.user.get_current()
         roles = user.getRolesInContext(self.context)
-        userid = unicode(user.getProperty("id"))
+        userid = user.getProperty("id")
         parent = self.context.aq_parent
         
         is_supervisor = False

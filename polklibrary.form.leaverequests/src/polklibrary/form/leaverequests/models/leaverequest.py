@@ -62,7 +62,7 @@ workflow_choices = SimpleVocabulary([
 def supervisors_choices(context):
     try:
         voc = []
-        email = unicode(api.user.get_current().getProperty("email"))
+        email = api.user.get_current().getProperty("email")
         parent = context
         if context.portal_type == 'polklibrary.form.leaverequests.models.leaverequest':
             parent = context.aq_parent
@@ -77,7 +77,7 @@ def supervisors_choices(context):
             return SimpleVocabulary(voc)
         return []
     except Exception as e:
-        print "ERROR VOCA: " + str(e)
+        print("ERROR VOCA: " + str(e))
         return []
 directlyProvides(supervisors_choices, IContextSourceBinder)
 

@@ -48,7 +48,6 @@ class LeaveFormView(BrowserView):
     def get_reviewers_content(self):
         limit = int(self.request.form.get('stafflimit', 25))
         userid = api.user.get_current().getProperty("id")
-        #userid = unicode(api.user.get_current().getProperty("email")).replace(u"@uwosh.edu",u"")
         catalog = api.portal.get_tool(name='portal_catalog')
         brains = catalog.searchResults(
             portal_type='polklibrary.form.leaverequests.models.leaverequest',
@@ -69,10 +68,9 @@ class LeaveFormView(BrowserView):
         
         
     def is_reviewer(self):
-        #userid = unicode(api.user.get_current().getProperty("userid"))
         user = api.user.get_current()
         roles = user.getRolesInContext(self.context)
-        userid = unicode(user.getProperty("id"))
+        userid = user.getProperty("id")
         
         is_supervisor = False
         supervisor_list = self.context.supervisors.split('\n')

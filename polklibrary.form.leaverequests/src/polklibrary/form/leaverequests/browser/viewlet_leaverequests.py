@@ -9,17 +9,17 @@ class LeaveRequestViewlet(ViewletBase):
     @property
     def get_name(self):
         user = api.user.get_current()
-        name = unicode(user.getProperty("first_name", '') + ' ' + user.getProperty("last_name", ''))
+        name = user.getProperty("first_name", '') + ' ' + user.getProperty("last_name", '')
         if len(name) > 5:
             return name
-        name = unicode(user.getProperty("fullname", ''))
+        name = user.getProperty("fullname", '')
         if name:
             return name
         return u"Missing name"
     
     @property
     def get_email(self):
-        email = unicode(api.user.get_current().getProperty("email"))
+        email = api.user.get_current().getProperty("email")
         if email:
             return email
         return u"Missing email"
