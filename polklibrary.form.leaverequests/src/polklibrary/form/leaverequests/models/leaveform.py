@@ -18,7 +18,7 @@ class ILeaveForm(model.Schema):
         title=u"Add Supervisors",
         description=u"One per line.  Format as follows:   Ron Hardy|hardyr@uwosh.edu|karelsr@uwosh.edu,harringp@uwosh.edu",
         required=False,
-        missing_value=u"",
+        missing_value=u"Supervisor Name|supervisor@test.com|employee@test.com",
         default=u"",
     )
 
