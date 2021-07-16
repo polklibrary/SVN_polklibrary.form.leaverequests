@@ -15,7 +15,7 @@ class WSDeleteView(BrowserView):
         
         end_ymd = self.request.get('ymd','')
         end_ymdhm = self.request.get('ymdhm','')
-        test_run = self.request.get('test_run','0')
+        execute = self.request.get('execute','0')
         
         start = DateTime(datetime.strptime("2000-01-01", '%Y-%m-%d'))
         end = None
@@ -31,7 +31,7 @@ class WSDeleteView(BrowserView):
             brains = api.content.find(self.context,portal_type="polklibrary.form.leaverequests.models.leaverequest", sort_on='created', created=date_range_query)
 
             
-            if test_run == '1':
+            if execute == '0':
                 output = "TEST ONLY -- Processed: " + str(len(brains)) + '\n\n'
                 for brain in brains:
                     output += str(brain.created) + '   ' + brain.getURL() + '\n'
@@ -49,7 +49,7 @@ class WSDeleteView(BrowserView):
         
         return 'Param Example: Year-Month-Day_24HourMinute as ymdhm=2018-01-21_1530 \n' \
                'Param Example: Year-Month-Day as ymd=2018-01-21 \n' \
-               'Param Optional: test_run=1 \n' \
+               'Param Optional to run it: execute=1 \n' \
         
         
     
