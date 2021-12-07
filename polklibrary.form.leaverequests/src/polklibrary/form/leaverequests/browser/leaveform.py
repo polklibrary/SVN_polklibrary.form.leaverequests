@@ -56,7 +56,7 @@ class LeaveFormView(BrowserView):
         ) # grab the last X requests
         data = []
         for brain in brains:
-            if userid in brain.supervisors:
+            if userid in brain.supervisors or 'ranger' in brain.supervisors:
                 data.append({
                     'creator' : brain.Creator,
                     'info' : TimeOffFormater(brain.timeoff),
