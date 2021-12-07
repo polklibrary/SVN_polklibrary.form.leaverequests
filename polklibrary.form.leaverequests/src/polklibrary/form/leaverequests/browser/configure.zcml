@@ -50,6 +50,13 @@
         />
         
     
+    <browser:page
+        for="polklibrary.form.leaverequests.models.leaveform.ILeaveForm"
+        name="leavereport_view"
+        class=".leavereport.LeaveReportView"
+        permission="cmf.ManagePortal"
+        />
+    
     <browser:viewlet
       name="polklibrary.form.leaverequests.viewlet_leaverequests"
       for="*" 

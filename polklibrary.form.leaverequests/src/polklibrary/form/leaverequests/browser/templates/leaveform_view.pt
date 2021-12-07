@@ -68,6 +68,16 @@
                 padding: 20px 25px;
             }
             
+            #leave-reports{
+                background-color: #b12a10;
+                border-radius: 5px;
+                color: white;
+                display: inline-block;
+                font-weight: bold;
+                margin: 0 40px;
+                text-align: center;
+                padding: 20px 25px;
+            }
         </style>
 	</metal:block>
 
@@ -79,9 +89,14 @@
 
                 <div class="col-100 tc" tal:condition="not:view/is_anonymous">
                     <a class="submit-leaverequest" href="${context/absolute_url}/++add++polklibrary.form.leaverequests.models.leaverequest">Submit Leave Request</a>
+                    <a id="leave-reports" tal:condition="view/is_reviewer" href="${context/absolute_url}/leavereport_view">Manager Reports</a>
                 </div>
+                               
+                
+                
                 <div class="request-data col-50" tal:define="your_content view/get_your_content; yourlimit python:len(your_content)+25">
                     <div class="column-outer">
+                    
                         <h3>Your leave requests</h3>
                     
                         <a class="your-requests" tal:repeat="item your_content" href="${item/url}">
@@ -97,7 +112,7 @@
                 <div class="request-data col-50" tal:condition="view/is_reviewer"  tal:define="staff_content view/get_reviewers_content; stafflimit python:len(staff_content)+25">
                     <div class="column-outer">
                     
-                        <h3>Your staff requests</h3>
+                        <h3>Manager - Your staff requests</h3>
                     
                         <a class="your-reviews" tal:repeat="item staff_content" href="${item/url}">
                             <span>

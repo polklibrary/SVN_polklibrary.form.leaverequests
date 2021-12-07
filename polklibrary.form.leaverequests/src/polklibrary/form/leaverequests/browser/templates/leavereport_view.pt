@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone"
+	  lang="en">
+<body>
+
+
+	<metal:content-title fill-slot="content-title">
+        <h1 class="documentFirstHeading">Manager - Leave Reports</h1>
+    </metal:content-title>
+	<metal:content-description fill-slot="content-description"></metal:content-description>
+
+
+    
+	<metal:block fill-slot="style_slot">
+        <link rel="stylesheet" type="text/css" href="${context/absolute_url}/++resource++polklibrary.form.leaverequests/leavereports.css" />
+	</metal:block>
+
+	<metal:content-core fill-slot="content-core">
+
+        <div id="leavereport-form">
+            
+            <div>
+            
+                <form method="post">
+                    <label for="submission-limit">How many requests to show per employee?</label>
+                    <input type="number" id="submission-limit" name="form.report.submission.limit" min="1" max="50" value="${view/submission_limit}" />
+                    <input type="submit" name="form.report.submission.submit" value="Generate Report" />
+                </form>
+
+
+                <div class="clear"></div>
+                
+                <div class="report-groups" tal:define="all_reports view/get_reports">
+                
+                    <div class="report-group" tal:repeat="report all_reports">
+                        <h3>${report}</h3>
+                        <div class="report-request" tal:repeat="item python:all_reports[report]">
+                            <a class="report-url" href="${item/url}">
+                                <span>
+                                    ${item/workflow_status}
+                                </span>
+                                <div class="report-request-info" tal:content="structure item/info"></div>
+                            </a>
+                        </div>
+                    
+                    </div>
+                    
+                    <div class="report-group" tal:repeat="report all_reports">
+                        <h3>${report}</h3>
+                        <div class="report-request" tal:repeat="item python:all_reports[report]">
+                            <a class="report-url" href="${item/url}">
+                                <span>
+                                    ${item/workflow_status}
+                                </span>
+                                <div class="report-request-info" tal:content="structure item/info"></div>
+                            </a>
+                        </div>
+                    
+                    </div>
+                    
+                    <div class="report-group" tal:repeat="report all_reports">
+                        <h3>${report}</h3>
+                        <div class="report-request" tal:repeat="item python:all_reports[report]">
+                            <a class="report-url" href="${item/url}">
+                                <span>
+                                    ${item/workflow_status}
+                                </span>
+                                <div class="report-request-info" tal:content="structure item/info"></div>
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="col-100">
+                    
+                </div>
+            
+                            
+            </div>
+            
+            
+            <div class="clear"></div>
+        </div>
+        
+	</metal:content-core>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+
+#submission-limit {
+    display: inline-block !important;
+    width: 100px;
+    vertical-align: middle;
+}
+label[for="submission-limit"] {
+    display: block;
+}
+
+.report-groups{
+    margin-top: 20px;
+    width: 100%;
+}
+
+
+.report-group {
+    float: left;
+    border: 1px solid gray;
+    width: 90%;
+    margin: 10px;
+}
+
+.report-group h3{
+    background-color: #ddd;
+    margin: 0;
+    padding: 5px 10px;
+}
+
+.report-group .report-request{
+    padding: 5px 10px 5px 10px
+}
+
+.report-group .report-url{
+    text-decoration: none !important;
+}
+
+.report-group .report-url .report-request-info {
+    padding: 0 20px;
+}
