@@ -25,13 +25,13 @@ class LeaveReportView(BrowserView):
         catalog = api.portal.get_tool(name='portal_catalog')
         brains = catalog.searchResults(
             portal_type='polklibrary.form.leaverequests.models.leaverequest',
-            sort_on='created',
-            sort_order='descending'
+            sort_on='created, Creator',
+            sort_order='descending, ascending'
         )
         
         data = {}
         for brain in brains:
-            if userid in brain.supervisors or 'hietpasd' in userid:
+            if userid in brain.supervisors or 'hietpasd' in userid or 'admin' in userid:
             
                 if brain.Creator not in data: 
                     data[brain.Creator] = []
