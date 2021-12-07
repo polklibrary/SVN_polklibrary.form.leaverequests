@@ -97,7 +97,7 @@
                 <div class="request-data col-50" tal:condition="view/is_reviewer"  tal:define="staff_content view/get_reviewers_content; stafflimit python:len(staff_content)+25">
                     <div class="column-outer">
                     
-                        <h3>Your staff requests (Fixing bug here, just a sec...)</h3>
+                        <h3>Your staff requests</h3>
                     
                         <a class="your-reviews" tal:repeat="item staff_content" href="${item/url}">
                             <span>
