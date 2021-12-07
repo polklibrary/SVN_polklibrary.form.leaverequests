@@ -25,8 +25,8 @@ class LeaveReportView(BrowserView):
         catalog = api.portal.get_tool(name='portal_catalog')
         brains = catalog.searchResults(
             portal_type='polklibrary.form.leaverequests.models.leaverequest',
-            sort_on='created, Creator',
-            sort_order='descending, ascending'
+            sort_on='created',
+            sort_order='descending'
         )
         
         data = {}
@@ -44,7 +44,7 @@ class LeaveReportView(BrowserView):
                         'url' : brain.getURL(),
                     })
                     
-        return data
+        return dict(sorted(data.items()))
 
         
     @property

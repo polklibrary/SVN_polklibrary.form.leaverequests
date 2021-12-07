@@ -48,31 +48,6 @@
                     
                     </div>
                     
-                    <div class="report-group" tal:repeat="report all_reports">
-                        <h3>${report}</h3>
-                        <div class="report-request" tal:repeat="item python:all_reports[report]">
-                            <a class="report-url" href="${item/url}">
-                                <span>
-                                    ${item/workflow_status}
-                                </span>
-                                <div class="report-request-info" tal:content="structure item/info"></div>
-                            </a>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="report-group" tal:repeat="report all_reports">
-                        <h3>${report}</h3>
-                        <div class="report-request" tal:repeat="item python:all_reports[report]">
-                            <a class="report-url" href="${item/url}">
-                                <span>
-                                    ${item/workflow_status}
-                                </span>
-                                <div class="report-request-info" tal:content="structure item/info"></div>
-                            </a>
-                        </div>
-                    
-                    </div>
                 </div>
                 
                 <div class="col-100">
