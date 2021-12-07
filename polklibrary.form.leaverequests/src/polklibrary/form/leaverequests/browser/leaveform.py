@@ -53,7 +53,7 @@ class LeaveFormView(BrowserView):
             portal_type='polklibrary.form.leaverequests.models.leaverequest',
             sort_on='created',
             sort_order='descending'
-        )[:limit]
+        ) # grab the last X requests
         data = []
         for brain in brains:
             if userid in brain.supervisors:
@@ -63,7 +63,7 @@ class LeaveFormView(BrowserView):
                     'workflow_status' : brain.workflow_status.capitalize(),
                     'url' : brain.getURL(),
                 })
-        return data
+        return data[:limit]
 
         
         
@@ -78,7 +78,7 @@ class LeaveFormView(BrowserView):
             supervisors = s.split('|')
             if userid in supervisors[1]:
                 is_supervisor = True
-        
+       
         return ('Manager' in roles or 'Reviewer' in roles) and is_supervisor # and userid in self.context.supervisors
       
         

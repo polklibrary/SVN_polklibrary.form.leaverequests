@@ -42,7 +42,13 @@
             }
             
             #leaverequest-form .request-data a span:last-child {
-                display: inline-block;
+                display: block;
+                vertical-align: top;
+            }
+            
+            #leaverequest-form .request-data a.your-reviews span:last-child {
+                display: block;
+                color: gray;
                 vertical-align: top;
             }
             #showmore-your-requests, #showmore-your-reviews {
@@ -98,6 +104,7 @@
                                 ${item/workflow_status}
                             </span>
                             <span> requested by ${item/creator}</span>
+                            <span class="staff-info" tal:content="structure item/info"></span>
                         </a>
                         <a id="showmore-your-reviews" href="${context/absolute_url}?stafflimit=${stafflimit}">(Show more)</a>
                     </div>
