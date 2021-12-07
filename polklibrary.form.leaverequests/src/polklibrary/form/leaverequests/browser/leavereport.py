@@ -8,6 +8,7 @@ import random, time, transaction
 
 from polklibrary.form.leaverequests.browser.leaverequest import TimeOffFormater
 
+import re
 import logging
 logger = logging.getLogger("Plone")
 
@@ -33,11 +34,14 @@ class LeaveReportView(BrowserView):
         for brain in brains:
             if userid in brain.supervisors or 'hietpasd' in userid or 'admin' in userid:
             
-                if brain.Creator not in data: 
-                    data[brain.Creator] = []
+                fullname = self.to_title(brain.Title)
+            
+                if fullname not in data: 
+                    data[fullname] = []
                     
-                if len(data[brain.Creator]) < self.submission_limit:
-                    data[brain.Creator].append({
+                if len(data[fullname]) < self.submission_limit:
+                    data[fullname].append({
+                        'fullname' : self.to_title(brain.Title),
                         'creator' : brain.Creator,
                         'info' : TimeOffFormater(brain.timeoff),
                         'workflow_status' : brain.workflow_status.capitalize(),
@@ -46,6 +50,11 @@ class LeaveReportView(BrowserView):
                     
         return dict(sorted(data.items()))
 
+        
+    def to_title(self, title):
+        title = title.replace('-',' ')
+        return re.sub(r'[0-9]+', '', title).title()
+        
         
     @property
     def portal(self):
