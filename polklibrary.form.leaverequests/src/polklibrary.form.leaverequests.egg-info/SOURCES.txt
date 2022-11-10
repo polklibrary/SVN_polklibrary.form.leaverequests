@@ -27,15 +27,18 @@ src/polklibrary/form/leaverequests/browser/__init__.py
 src/polklibrary/form/leaverequests/browser/close_window.py
 src/polklibrary/form/leaverequests/browser/configure.zcml
 src/polklibrary/form/leaverequests/browser/leaveform.py
+src/polklibrary/form/leaverequests/browser/leavereport.py
 src/polklibrary/form/leaverequests/browser/leaverequest.py
 src/polklibrary/form/leaverequests/browser/viewlet_leaverequests.py
 src/polklibrary/form/leaverequests/browser/ws_approval.py
+src/polklibrary/form/leaverequests/browser/ws_delete.py
 src/polklibrary/form/leaverequests/browser/ws_stafftype.py
 src/polklibrary/form/leaverequests/browser/overrides/.gitkeep
 src/polklibrary/form/leaverequests/browser/static/.gitkeep
 src/polklibrary/form/leaverequests/browser/static/jquery-ui.min.js
 src/polklibrary/form/leaverequests/browser/static/jquery-ui.structure.min.css
 src/polklibrary/form/leaverequests/browser/static/jquery-ui.theme.min.css
+src/polklibrary/form/leaverequests/browser/static/leavereports.css
 src/polklibrary/form/leaverequests/browser/static/leaverequest.css
 src/polklibrary/form/leaverequests/browser/static/leaverequest.js
 src/polklibrary/form/leaverequests/browser/static/images/ui-icons_444444_256x240.png
@@ -46,6 +49,7 @@ src/polklibrary/form/leaverequests/browser/static/images/ui-icons_cc0000_256x240
 src/polklibrary/form/leaverequests/browser/static/images/ui-icons_ffffff_256x240.png
 src/polklibrary/form/leaverequests/browser/templates/close_view.pt
 src/polklibrary/form/leaverequests/browser/templates/leaveform_view.pt
+src/polklibrary/form/leaverequests/browser/templates/leavereport_view.pt
 src/polklibrary/form/leaverequests/browser/templates/leaverequest_view.pt
 src/polklibrary/form/leaverequests/browser/templates/viewlet_leaverequests.pt
 src/polklibrary/form/leaverequests/locales/polklibrary.form.leaverequests.pot
