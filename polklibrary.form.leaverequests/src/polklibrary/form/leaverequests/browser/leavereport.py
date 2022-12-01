@@ -30,24 +30,34 @@ class LeaveReportView(BrowserView):
             sort_order='descending'
         )
         
+        supervisor_data = {}
+        for supervisor in self.context.supervisors.split('\n'):
+            supervisor_data_parts = supervisor.split('|')
+            supervisor_data[supervisor_data_parts[1].strip()] = supervisor_data_parts[2].strip()
+        
         data = {}
         for brain in brains:
-            if userid in brain.supervisors or 'hietpasd' in userid or 'admin' in userid:
-            
-                fullname = self.to_title(brain.Title)
-            
-                if fullname not in data: 
-                    data[fullname] = []
+        
+            if userid + '@uwosh.edu' in supervisor_data:
+                staff_emails = supervisor_data[userid + '@uwosh.edu']
+                
+                if brain.email.strip() in staff_emails:
+                    if userid in brain.supervisors or 'hietpasd' in userid or 'admin' in userid:
                     
-                if len(data[fullname]) < self.submission_limit:
-                    data[fullname].append({
-                        'fullname' : self.to_title(brain.Title),
-                        'creator' : brain.Creator,
-                        'info' : TimeOffFormater(brain.timeoff),
-                        'workflow_status' : brain.workflow_status.capitalize(),
-                        'url' : brain.getURL(),
-                    })
+                        fullname = self.to_title(brain.Title)
                     
+                        if fullname not in data: 
+                            data[fullname] = []
+                            
+                        if len(data[fullname]) < self.submission_limit:
+                            data[fullname].append({
+                                'fullname' : self.to_title(brain.Title),
+                                'creator' : brain.Creator,
+                                'info' : TimeOffFormater(brain.timeoff),
+                                'workflow_status' : brain.workflow_status.capitalize(),
+                                'url' : brain.getURL(),
+                            })
+                        
         return dict(sorted(data.items()))
 
         

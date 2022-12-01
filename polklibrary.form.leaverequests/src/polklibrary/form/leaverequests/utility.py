@@ -45,22 +45,24 @@ def TimeOffFormater(timeoff):
 
 
 def MailMe(subject, from_email, to_emails, body):
-    registry = getUtility(IRegistry)
-    smtp_host = registry['plone.smtp_host']
-    smtp_port = registry['plone.smtp_port']
-    
-    msg = MIMEMultipart('alternative')
-    msg['Subject'] = subject
-    msg['From'] = from_email
-    msg['To'] = ', '.join(to_emails)
+    try:
+        registry = getUtility(IRegistry)
+        smtp_host = registry['plone.smtp_host']
+        smtp_port = registry['plone.smtp_port']
+        
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = subject
+        msg['From'] = from_email
+        msg['To'] = ', '.join(to_emails)
 
-    mail = MIMEText(body, 'html')
-    msg.attach(mail)
+        mail = MIMEText(body, 'html')
+        msg.attach(mail)
 
-    s = smtplib.SMTP(smtp_host, smtp_port)
-    s.sendmail(from_email, to_emails, msg.as_string())
-    s.quit()
-
+        s = smtplib.SMTP(smtp_host, smtp_port)
+        s.sendmail(from_email, to_emails, msg.as_string())
+        s.quit()
+    except:
+        pass
 
 
 def iso_format(dt):
