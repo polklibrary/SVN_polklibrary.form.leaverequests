@@ -25,7 +25,7 @@ $(document).ready(function(){
     
     
     
-    
+    $('#form-widgets-workflow_status_comments').attr('readonly',true);
     
     
     
