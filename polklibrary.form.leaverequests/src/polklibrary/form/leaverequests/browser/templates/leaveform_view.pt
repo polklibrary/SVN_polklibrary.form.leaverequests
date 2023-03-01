@@ -147,7 +147,7 @@
                 
                 <div class="request-data col-45">
                 
-                    <div class="request-box leave-reports-box" tal:define="your_leave view/get_your_leaverequests; yourleavelimit python:len(your_leave)+25;">
+                    <div class="request-box leave-reports-box" tal:define="your_leave view/get_your_leaverequests; yourleavelimit python:len(your_leave)+10;">
                         <div class="column-outer">
                         
                             <h3>Your leave requests</h3>
@@ -163,7 +163,7 @@
                     </div>
                     
                     
-                    <div class="request-box travel-reports-box" tal:define="your_travel view/get_your_travelrequests; yourtravellimit python:len(your_travel)+25;">
+                    <div class="request-box travel-reports-box" tal:define="your_travel view/get_your_travelrequests; yourtravellimit python:len(your_travel)+10;">
                         <div class="column-outer">
                         
                             <h3>Your travel requests</h3>

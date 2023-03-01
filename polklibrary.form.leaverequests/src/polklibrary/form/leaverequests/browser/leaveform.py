@@ -24,7 +24,7 @@ class LeaveFormView(BrowserView):
         return api.user.is_anonymous()
         
     def get_your_leaverequests(self):
-        limit = int(self.request.form.get('yourleavelimit', 25))
+        limit = int(self.request.form.get('yourleavelimit', 10))
         userid = api.user.get_current().getProperty("id")
         
         catalog = api.portal.get_tool(name='portal_catalog')
@@ -45,7 +45,7 @@ class LeaveFormView(BrowserView):
         return data
 
     def get_your_travelrequests(self):
-        limit = int(self.request.form.get('yourtravellimit', 25))
+        limit = int(self.request.form.get('yourtravellimit', 10))
         userid = api.user.get_current().getProperty("id")
         
         catalog = api.portal.get_tool(name='portal_catalog')
