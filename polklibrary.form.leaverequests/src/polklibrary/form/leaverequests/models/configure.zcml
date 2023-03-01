@@ -27,4 +27,28 @@
         permission="cmf.ModifyPortalContent"
     />
     
+    
+    
+    <adapter
+        for="Products.CMFCore.interfaces.IFolderish
+             zope.publisher.interfaces.browser.IDefaultBrowserLayer
+             plone.dexterity.interfaces.IDexterityFTI"
+        provides="zope.publisher.interfaces.browser.IBrowserPage"
+        factory="polklibrary.form.leaverequests.models.travelrequest.AddView"
+        name="polklibrary.form.leaverequests.models.travelrequest"
+    />
+    <class class="polklibrary.form.leaverequests.models.travelrequest.AddView">
+        <require
+            permission="cmf.AddPortalContent"
+            interface="zope.publisher.interfaces.browser.IBrowserPage"
+            />
+    </class>    
+        
+    <browser:page
+        for="polklibrary.form.leaverequests.models.travelrequest.ITravelRequest"
+        name="edit"
+        class="polklibrary.form.leaverequests.models.travelrequest.EditForm"
+        permission="cmf.ModifyPortalContent"
+    />
+    
 </configure>

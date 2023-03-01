@@ -1,0 +1,135 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone"
+	  lang="en">
+<body>
+
+
+	<metal:content-title fill-slot="content-title">
+        <h1 class="documentFirstHeading">UWO Libraries Travel Request Form</h1>
+    </metal:content-title>
+	<metal:content-description fill-slot="content-description"></metal:content-description>
+
+	<metal:block fill-slot="javascript_head_slot">
+        <script type="text/javascript">
+            $(document).ready(function(){
+                console.log("abba");
+            });
+        </script>  
+	</metal:block>
+    
+    
+	<metal:block fill-slot="style_slot">
+        <link rel="stylesheet" type="text/css" href="${view/portal/absolute_url}/++resource++polklibrary.form.leaverequests/travelrequest_form.css" />
+	</metal:block>
+
+	<metal:content-core fill-slot="content-core">
+
+        <div id="travelrequest-sheet" class="column">
+            
+            <ul id="trf-information">
+                <li>Professional travel is encouraged in the UWO Libraries. Travel must be relevant to current job duties.</li>
+                <li>Travel funding is dependent on the budget.</li>
+                <li>Academic staff may request full reimbursement for travel.</li>
+                <li>University staff may request up to $500 per fiscal year for travel.</li>
+                <li>All employees must be employed for at least one year prior to requesting funding.</li>
+                <li>Some travel may be eligible for 
+                    <a target="_blank" href="https://uwosh.edu/uss/awards-and-grants/university-staff-grant/">university staff</a> 
+                    or 
+                    <a target="_blank" href="https://uwosh.edu/sas/aspdf/">academic staff</a>
+                    professional development grants from the campus. Please pursue these options, when possible, to reduce the cost to the library.
+                </li>
+            </ul>
+            
+            <form action="post">
+            
+            
+                <div>
+                    <label for="trf-name">Your name?</label>
+                    <input id="trf-name" type="text" name="" value="" />
+                </div>
+                
+                <div>
+                    <label for="trf-activity">Name of conference or activity?</label>
+                    <input id="trf-activity" type="text" name="" value="" />
+                </div>
+                
+                <div>
+                    <label for="trf-location">Where is the location of your conference/activity?</label>
+                    <input id="trf-location" type="text" name="" value="" />
+                </div>
+                
+                <div>
+                    <label for="trf-datetime">Date and time you will be traveling from work?</label>
+                    <input id="trf-datetime" type="text" name="" value="" />
+                </div>
+                
+                <div>
+                    <label for="trf-relates">Describe the nature of the professinal development/activity and how it relates to your job:</label>
+                    <textarea id="trf-relates" name=""> </textarea>
+                </div>
+                
+                <div>
+                    <label for="trf-type">Type of professional development</label>
+                    <input id="trf-type" type="text" placeholder="e.g. Conference, Workshop, etc..." name="" value="" />
+                </div>
+                
+                <div>
+                    <label for="trf-funding">Did you apply or will you apply for university professional development funding?</label>
+                    <input type="radio" id="trl-funding-yes" name="" value="Yes">
+                    <label for="trl-funding-yes">Yes</label>
+                    <input type="radio" id="trl-funding-no" name="" value="No">
+                    <label for="trl-funding-no">No</label>
+                </div>
+                
+                <div>
+                    <label for="trf-others">Names of other staff attending:</label>
+                    <textarea id="trf-others" name=""> </textarea>
+                </div>
+                
+                <div>
+                    <label for="trf-provisions">Provisions for assigned responsiblities:</label>
+                    <textarea id="trf-provisions" name=""> </textarea>
+                </div>
+                
+                
+                <div>
+                    <label for="trf-cost">Estimated cost of trip</label>
+                    <input id="trf-cost" type="text" placeholder="e.g. Registration cost, mileage, parking, meals lodging, etc..." name="" value="" />
+                </div>
+                
+                <div>
+                    <label for="trf-departure">Departure date and time</label>
+                    <input id="trf-departure" type="text" placeholder="" name="" value="" />
+                </div>
+                
+                <div>
+                    <label for="trf-return">Return date and time</label>
+                    <input id="trf-return" type="text" placeholder="" name="" value="" />
+                </div>
+                
+                
+                <div>
+                    <label for="trf-approver">Your supervisor/approver</label>
+                    <select name="trf-approver">
+                        <option></option>
+                    </select>
+                
+                    <input id="trf-submit" type="submit" name="" value="Submit for approval" />
+                
+                </div>
+                
+                
+                
+                
+            </form>
+            
+            <div class="clear"></div>
+        </div>
+        
+	</metal:content-core>
+
+</body>
+</html>

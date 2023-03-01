@@ -133,8 +133,8 @@ class ILeaveRequest(model.Schema):
         title=u"Request Status",
         source=workflow_choices,
         required=False,
-        default='pending',
-        missing_value='pending',
+        default=u"pending",
+        missing_value=u"pending",
     )
 
     gcal_event_id = schema.TextLine(

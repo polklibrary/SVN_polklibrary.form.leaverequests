@@ -34,16 +34,26 @@
                 text-decoration: none;
             }
             
-            #leaverequest-form .request-data a span:first-child {
+            #leaverequest-form .leave-reports-box a span:first-child {
                 display: inline-block;
                 font-weight: bold;
                 width: 100px;
                 vertical-align: top;
             }
-            
-            #leaverequest-form .request-data a span:last-child {
+            #leaverequest-form .leave-reports-box a span:last-child {
                 display: block;
                 vertical-align: top;
+            }
+            #leaverequest-form .travel-reports-box a span:first-child {
+                display: inline-block;
+                font-weight: bold;
+                width: 300px;
+                vertical-align: top;
+            }
+            #leaverequest-form .travel-reports-box a span:last-child {
+                display: block;
+                vertical-align: top;
+                margin-left: 10px;
             }
             
             #leaverequest-form .request-data a.your-reviews span:last-child {
@@ -65,19 +75,58 @@
                 display: inline-block;
                 font-weight: bold;
                 text-align: center;
+                margin: 0 10px;
                 padding: 20px 25px;
             }
+            #leaverequest-form .submit-travelrequest{
+                background-color: #0f9d80;
+                border-radius: 5px;
+                color: white;
+                display: inline-block;
+                font-weight: bold;
+                text-align: center;
+                margin: 0 10px;
+                padding: 20px 25px;
+                position: relative;
+            }
+            .submit-travelrequest::after {
+                background-color: red;
+                border-radius: 4px 4px 0 0;
+                content: "Please do not use yet";
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                z-index: 1;
+                right: 0;
+                color: white;
+            }
             
-            #leave-reports{
+            #leave-reports, #travel-reports{
                 background-color: #b12a10;
                 border-radius: 5px;
                 color: white;
                 display: inline-block;
                 font-weight: bold;
-                margin: 0 40px;
+                margin: 0 10px;
                 text-align: center;
                 padding: 20px 25px;
             }
+            
+            .request-box {
+                background-color: #f1f1f1;
+                border-radius: 10px;
+                padding: 5px 0px;
+                margin: 15px 0;
+            }
+            .leave-reports-box {
+                border: 5px solid #1072b1;
+            }
+            .travel-reports-box {
+                border: 5px solid #0f9d80;
+            }
+            
+            
+            
         </style>
 	</metal:block>
 
@@ -89,27 +138,51 @@
 
                 <div class="col-100 tc" tal:condition="not:view/is_anonymous">
                     <a class="submit-leaverequest" href="${context/absolute_url}/++add++polklibrary.form.leaverequests.models.leaverequest">Submit Leave Request</a>
-                    <a id="leave-reports" tal:condition="view/is_reviewer" href="${context/absolute_url}/leavereport_view">Manager Reports</a>
+                    <a class="submit-travelrequest" href="${context/absolute_url}/++add++polklibrary.form.leaverequests.models.travelrequest">Submit Travel Request</a>
+                    <a id="leave-reports" tal:condition="view/is_reviewer" href="${context/absolute_url}/leavereport_view">Leave Reports</a>
+                    <!-- <a id="travel-reports" tal:condition="view/is_reviewer" href="${context/absolute_url}/travelreport_view">Travel Reports</a> -->
                 </div>
                                
                 
                 
-                <div class="request-data col-50" tal:define="your_content view/get_your_content; yourlimit python:len(your_content)+25">
-                    <div class="column-outer">
-                    
-                        <h3>Your leave requests</h3>
-                    
-                        <a class="your-requests" tal:repeat="item your_content" href="${item/url}">
-                            <span>
-                                ${item/workflow_status}
-                            </span>
-                            <span tal:content="structure item/info"></span>
-                        </a>
-                        <a id="showmore-your-requests" href="${context/absolute_url}?yourlimit=${yourlimit}">(Show more)</a>
+                <div class="request-data col-45">
+                
+                    <div class="request-box leave-reports-box" tal:define="your_leave view/get_your_leaverequests; yourleavelimit python:len(your_leave)+25;">
+                        <div class="column-outer">
+                        
+                            <h3>Your leave requests</h3>
+                        
+                            <a class="your-requests" tal:repeat="item your_leave" href="${item/url}">
+                                <span>
+                                    ${item/workflow_status}
+                                </span>
+                                <span tal:content="structure item/info"></span>
+                            </a>
+                            <a id="showmore-your-requests" href="${context/absolute_url}?yourleavelimit=${yourleavelimit}">(Show more)</a>
+                        </div>
                     </div>
+                    
+                    
+                    <div class="request-box travel-reports-box" tal:define="your_travel view/get_your_travelrequests; yourtravellimit python:len(your_travel)+25;">
+                        <div class="column-outer">
+                        
+                            <h3>Your travel requests</h3>
+                        
+                            <a class="your-requests" tal:repeat="item your_travel" href="${item/url}">
+                                <span>
+                                    ${item/workflow_status}
+                                </span>
+                                <span tal:content="structure item/info"></span>
+                            </a>
+                            <a id="showmore-your-requests" href="${context/absolute_url}?yourtravellimit=${yourtravellimit}">(Show more)</a>
+                        </div>
+                    </div>
+                    
                 </div>
                 
-                <div class="request-data col-50" tal:condition="view/is_reviewer"  tal:define="staff_content view/get_reviewers_content; stafflimit python:len(staff_content)+25">
+                <div class="col-5">&nbsp;</div>
+                
+                <div class="request-data col-45" tal:condition="view/is_reviewer"  tal:define="staff_content view/get_reviewers_content; stafflimit python:len(staff_content)+25">
                     <div class="column-outer">
                     
                         <h3>Manager - Your staff requests</h3>

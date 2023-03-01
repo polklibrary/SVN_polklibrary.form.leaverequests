@@ -1,0 +1,14 @@
+#travel-info{
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    padding: 10px 10px 10px 30px;
+}
+#formfield-form-widgets-workflow_status {
+    background-color: #c2d8e1;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 300px;
+}
+#formfield-form-widgets-workflow_status label > span.formHelp {
+    display: block;
+}

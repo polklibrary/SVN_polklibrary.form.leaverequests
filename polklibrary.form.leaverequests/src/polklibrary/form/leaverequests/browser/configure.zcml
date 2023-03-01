@@ -20,6 +20,7 @@
         permission="cmf.ManagePortal"
         />
         
+        
     <browser:page
         for="*"
         name="leaverequest_workflow"
@@ -33,6 +34,14 @@
         class=".ws_stafftype.WSView"
         permission="zope.Public"
         />
+        
+    <browser:page
+        for="polklibrary.form.leaverequests.models.travelrequest.ITravelRequest"
+        name="travelrequest_view"
+        class=".travelrequest.TravelRequestView"
+        permission="zope2.View"
+        />
+        
         
     <browser:page
         for="polklibrary.form.leaverequests.models.leaverequest.ILeaveRequest"
@@ -67,6 +76,15 @@
       permission="zope2.View"
       />
     
+    <browser:viewlet
+      name="polklibrary.form.leaverequests.viewlet_travelrequests"
+      for="*" 
+      manager="plone.app.layout.viewlets.interfaces.IBelowContent" 
+      class=".viewlet_travelrequests.TravelRequestViewlet"
+      template="templates/viewlet_travelrequests.pt"
+      layer="zope.interface.Interface"
+      permission="zope2.View"
+      />
     
   <!-- Set overrides folder for Just-a-Bunch-Of-Templates product -->
   <include package="z3c.jbot" file="meta.zcml" />

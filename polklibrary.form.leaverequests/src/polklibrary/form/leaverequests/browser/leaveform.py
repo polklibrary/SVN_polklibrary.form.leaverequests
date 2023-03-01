@@ -23,8 +23,8 @@ class LeaveFormView(BrowserView):
     def is_anonymous(self):
         return api.user.is_anonymous()
         
-    def get_your_content(self):
-        limit = int(self.request.form.get('yourlimit', 25))
+    def get_your_leaverequests(self):
+        limit = int(self.request.form.get('yourleavelimit', 25))
         userid = api.user.get_current().getProperty("id")
         
         catalog = api.portal.get_tool(name='portal_catalog')
@@ -40,6 +40,38 @@ class LeaveFormView(BrowserView):
             data.append({
                 'info' : TimeOffFormater(brain.timeoff),
                 'workflow_status' : brain.workflow_status.capitalize(),
+                'url' : brain.getURL(),
+            })
+        return data
+
+    def get_your_travelrequests(self):
+        limit = int(self.request.form.get('yourtravellimit', 25))
+        userid = api.user.get_current().getProperty("id")
+        
+        catalog = api.portal.get_tool(name='portal_catalog')
+        brains = catalog.searchResults(
+            portal_type='polklibrary.form.leaverequests.models.travelrequest',
+            sort_on='created',
+            sort_order='descending',
+            Creator=userid
+        )[:limit]
+        
+        data = []
+        for brain in brains:
+            obj = brain.getObject()
+            
+            status = "Pending (Supervisor Approval)"
+            if brain.workflow_status == "denied":
+                status = "Denied"
+            elif brain.workflow_status == "supervisor_approved":
+                status = "Pending (Director Approval)"
+            elif brain.workflow_status == "director_approved":
+                status = "Approved"
+            
+            
+            data.append({
+                'info' : obj.activity,
+                'workflow_status' : status,
                 'url' : brain.getURL(),
             })
         return data

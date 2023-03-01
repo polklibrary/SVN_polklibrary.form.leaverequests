@@ -1,0 +1,6 @@
+<div id="travel-request-injection" data-name="${view/get_name}" data-email="${view/get_email}" tal:condition="view/is_allowed">
+    <link type="text/css" rel="stylesheet" href="${view/portal/absolute_url}/++resource++polklibrary.form.leaverequests/travelrequest_form.css" />
+    <script type="text/javascript" src="${view/portal/absolute_url}/++resource++polklibrary.form.leaverequests/travelrequest_form.js"></script>    
+</div>
+
+

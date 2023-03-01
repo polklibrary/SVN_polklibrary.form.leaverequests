@@ -1,0 +1,348 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone"
+	  lang="en">
+<body>
+
+
+	<metal:content-title fill-slot="content-title">
+        <h1 class="documentFirstHeading">Travel Request - For ${context/title}</h1>
+    </metal:content-title>
+	<metal:content-description fill-slot="content-description"></metal:content-description>
+
+	<metal:block fill-slot="javascript_head_slot">
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#delete-request').click(function(){
+                    if (confirm('Are you sure you want to remove this request?'))
+                        document.location = $('body').attr('data-base-url') + '?form.delete=1';
+                    else 
+                        document.location = $('body').attr('data-base-url');
+                });
+            });
+        </script>  
+	</metal:block>
+    
+    
+	<metal:block fill-slot="style_slot">
+        <style>
+        
+            #travelrequest-sheet h2.trf-status-header {
+                padding: 10px 10px 0 10px;
+            }
+
+            .trf-status{
+                background-color: #eee;
+                border: 1px solid #ddd;
+            }
+            .trf-status-box{
+                padding: 10px;
+            }
+            .trf-status-label{
+                border-radius: 10px;
+                font-size: 16px;
+                font-weight: bold;
+                padding: 10px;
+            }
+            .trf-status .trf-status-message{
+                font-size: 14px;
+                font-weight: normal;
+            }
+            .trf-status .trf-status-comments{
+                padding: 10px;
+            }
+            .trf-status-denied .trf-status-label { background-color: #f24949; }
+            .trf-status-pending .trf-status-label { background-color: #ffbb6a; }
+            .trf-status-supervisor-approved .trf-status-label { background-color: #fff26a; }
+            .trf-status-director-approved .trf-status-label { background-color: #40e737; }
+            
+            
+            
+            .trf-workflow-box {
+                background-color: #d8e6fb;
+                border: 1px solid #ddd;
+                padding: 10px;
+            }
+            .trf-approval-required {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            .trf-approval-next {
+                font-style: italic;
+                font-size: 13px;
+                margin-top: 10px;
+            }
+            
+            #travelrequest-sheet textarea.trf-comment {
+                height: 70px;
+                min-height: 70px;
+                width: 95%;
+            } 
+            
+            #travelrequest-sheet input[type="submit"].trf-forward {
+                background-color: #37de37;
+                color: white;
+                font-weight: bold;
+                margin: 5px 0px;
+                display: block;
+                width: 100%;
+            }
+            
+            #travelrequest-sheet input[type="submit"].trf-back {
+                background-color: #de3737;
+                color: white;
+                font-weight: bold;
+                margin: 5px 0px;
+                display: block;
+                width: 100%;
+            }
+            
+            .trf-optional{ color: #bbb; font-style: italic;}
+            
+            
+            .trf-makechanges {
+                background-color: #4a84ef;
+                border: 1px solid #3972db;
+                color: white;
+                font-weight: bold;
+                width: 100px;
+                display: block;
+                padding: 10px;
+                text-decoration: none !important;
+            }
+            
+            .trf-request {
+                background-color: #efefef;
+                border: 1px solid #ddd;
+                padding: 15px 20px;
+            }
+            .trf-request div {
+                padding: 5px 10px 10px 10px;
+            }
+            
+            
+        </style>
+	</metal:block>
+
+	<metal:content-core fill-slot="content-core">
+
+        <div id="travelrequest-sheet" class="column">
+            
+            <div class="col-33">
+                <div class="trf-status column-outer">
+                
+                    <h2 class="trf-status-header">Request Status</h2>
+
+                    <div class="trf-status-box trf-status-denied" tal:condition="python: context.workflow_status == 'denied'">
+                        <div class="trf-status-label">
+                            Denied
+                            <div class="trf-status-message">Your request has been denied</div>
+                        </div>
+                        <div class="trf-status-comments" tal:condition="not:context/workflow_status_comments"><b>Comments:</b><br />None</div>
+                        <div class="trf-status-comments" tal:condition="context/workflow_status_comments"><b>Comments:</b><br /><span tal:replace="structure view/comment_as_html"></span></div>
+                    </div>
+                    
+                    <div class="trf-status-box trf-status-pending" tal:condition="python: context.workflow_status == 'pending'">
+                        <div class="trf-status-label">
+                            Pending
+                            <div class="trf-status-message">Waiting on supervisor approval.</div>
+                        </div>
+                        <div class="trf-status-comments" tal:condition="not:context/workflow_status_comments"><b>Comments:</b><br />None</div>
+                        <div class="trf-status-comments" tal:condition="context/workflow_status_comments"><b>Comments:</b><br /><span tal:replace="structure view/comment_as_html"></span></div>
+                    </div>
+                    
+                    <div class="trf-status-box trf-status-supervisor-approved" tal:condition="python: context.workflow_status == 'supervisor_approved'">
+                        <div class="trf-status-label">
+                            Pending (Supervisor Approved)
+                            <div class="trf-status-message">Waiting on Library Director approval.</div>
+                        </div>
+                        <div class="trf-status-comments" tal:condition="not:context/workflow_status_comments"><b>Comments:</b><br />None</div>
+                        <div class="trf-status-comments" tal:condition="context/workflow_status_comments"><b>Comments:</b><br /><span tal:replace="structure view/comment_as_html"></span></div>
+                    </div>
+                                        
+                    <div class="trf-status-box trf-status-director-approved" tal:condition="python: context.workflow_status == 'director_approved'">
+                        <div class="trf-status-label">
+                            Approved (Completed)
+                            <div class="trf-status-message">Completed and sent to Library Office.</div>
+                        </div>
+                        <div class="trf-status-comments" tal:condition="not:context/workflow_status_comments"><b>Comments:</b><br />None</div>
+                        <div class="trf-status-comments" tal:condition="context/workflow_status_comments"><b>Comments:</b><br /><span tal:replace="structure view/comment_as_html"></span></div>
+                    </div>
+                    
+                </div>
+                
+                
+                <div class="trf-workflow-box column-outer" tal:condition="python: context.workflow_status == 'denied'">
+                    <div class="trf-approval-required">Denied options:</div>
+                    <a class="trf-makechanges" href="${context/absolute_url}/edit">Make Changes</a>       
+                            <div class="trf-approval-next">(Once you make changes, your request will return to Pending.)</div>         
+                </div>
+                
+                <div class="trf-workflow-box column-outer" tal:condition="python: view.is_reviewer() and view.is_in_workflow()">
+                    <form action="${context/absolute_url}/travelrequest_view" method="post">
+                    
+                    
+                        <tal:block condition="python: context.workflow_status == 'pending'">
+                            <div class="trf-approval-required">Your approval is required:</div>
+                            <label>Comment: <span class="trf-optional">(Optional)</span><label>
+                            <textarea class="trf-comment" name="form.workflow.comment"></textarea>
+                            <input class="trf-forward" type="submit" name="form.workflow.forward" value="Approve (Send to Library Director)" />
+                            <input class="trf-back" type="submit" name="form.workflow.back" value="Deny (Or send back for changes)" />
+                        </tal:block>
+                        
+                        
+                        <tal:block condition="python: context.workflow_status == 'supervisor_approved'">
+                            <div class="trf-approval-required">Your approval is required:</div>
+                            <label>Comment: <span class="trf-optional">(Optional)</span><label>
+                            <textarea  class="trf-comment" name="form.workflow.comment"></textarea>
+                            <input class="trf-forward" type="submit" name="form.workflow.forward" value="Approve (Send to Library Office)" />
+                            <input class="trf-back" type="submit" name="form.workflow.back" value="Send Back (Returns to pending)" />
+                        </tal:block>
+                        
+                        
+                    </form>
+                
+                </div>
+                
+            </div>
+            
+            
+            <div class="col-66">
+            
+                <div class="trf-request column-outer">
+                    <label>
+                        Name
+                    </label>
+                    <div>
+                        ${context/title}
+                    </div>
+                    
+                    <label>
+                        Email
+                    </label>
+                    <div>
+                        ${context/email}
+                    </div>
+                               
+                                        
+                    <label>
+                        Name of conference or activity?
+                    </label>
+                    <div>
+                        ${context/activity}
+                    </div>
+                    
+                    <label>
+                        Where is the location of your conference/activity?
+                    </label>
+                    <div>
+                        ${context/location}
+                    </div>
+                    
+                    <label>
+                        Date and time you will be traveling from work?
+                    </label>
+                    <div>
+                        ${context/activity_datetime}
+                    </div>
+                    
+                    <label>
+                        Describe the nature of the professinal development/activity and how it relates to your job:
+                    </label>
+                    <div>
+                        ${context/activity_description}
+                    </div>
+                    
+                    <label>
+                        Type of professional development
+                    </label>
+                    <div>
+                        ${context/development_type}
+                    </div>
+                    
+                    <label>
+                        Did you apply or will you apply for university professional development funding?
+                    </label>
+                    <div>
+                        ${context/funding}
+                    </div>
+                    
+                    <label>
+                        Names of other staff attending:
+                    </label>
+                    <div>
+                        ${context/others_attending}
+                    </div>
+                    
+                    <label>
+                        Provisions for assigned responsiblities:
+                    </label>
+                    <div>
+                        ${context/provisions}
+                    </div>
+                    
+                    <label>
+                        Estimated cost of trip?
+                    </label>
+                    <div>
+                        ${context/estimated_cost}
+                    </div>
+                    
+                    <label>
+                        Departure date and time?
+                    </label>
+                    <div>
+                        ${context/departure_datetime}
+                    </div>
+                    
+                    <label>
+                        Return date and time?
+                    </label>
+                    <div>
+                        ${context/return_datetime}
+                    </div>
+                    
+                    <label>
+                        Submitted
+                    </label>
+                    <div>
+                        ${view/created}
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            <!-- <div class="col-50"> -->
+                <!-- <div class="column-outer"> -->
+                    <!-- <h3>Options</h3> -->
+                    
+                    <!-- <a tal:condition="view/is_reviewer" class="approve" href="${context/absolute_url}/leaverequest_workflow?status=1&token=${context/UID}">Approve</a> -->
+                    <!-- <a tal:condition="view/is_reviewer" class="deny" href="${context/absolute_url}/leaverequest_workflow?status=0&token=${context/UID}">Deny</a> -->
+                    <!-- <span tal:condition="view/is_reviewer"> | </span> -->
+                    <!-- <a class="edit" href="${context/absolute_url}/edit">Edit</a> -->
+                    <!-- <a id="delete-request" class="deny" href="#">Delete</a> -->
+                    
+                    <!-- <div class="requestinfo"> -->
+                    <!-- (Note: Editing a request will revert it to "Pending") -->
+                    <!-- </div> -->
+                <!-- </div> -->
+                
+            <!-- </div> -->
+            
+            <div class="clear"></div>
+        </div>
+        
+	</metal:content-core>
+
+</body>
+</html>
