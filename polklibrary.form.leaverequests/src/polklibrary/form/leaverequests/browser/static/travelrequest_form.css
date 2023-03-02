@@ -7,7 +7,10 @@
     background-color: #c2d8e1;
     border: 1px solid #ccc;
     padding: 10px;
-    width: 300px;
+    width: 25%;
+    float: left;
+    height: 125px;
+    margin-right: 10px;
 }
 #formfield-form-widgets-workflow_status label > span.formHelp {
     display: block;
@@ -16,6 +19,11 @@
 #formfield-form-widgets-workflow_status_comments{
     background-color: #c2d8e1;
     border: 1px solid #ccc;
-    padding: 10px;
-    width: 100%;
+    padding: 10px 10px 5px 10px;
+    width: 73%;
+    float: left;
+    height: 125px;
+}
+#formfield-form-widgets-workflow_status_comments textarea{
+    min-height: 75px;
 }
