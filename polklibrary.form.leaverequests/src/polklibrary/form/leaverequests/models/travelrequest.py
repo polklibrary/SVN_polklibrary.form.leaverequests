@@ -136,7 +136,7 @@ class ITravelRequest(model.Schema):
         title=u"Did you apply or will you apply for university professional development funding?",
         source=yes_no_options,
         required=True,
-        missing_value=u'No',
+        default=u'No',
     )
     
     others_attending = schema.Text(
