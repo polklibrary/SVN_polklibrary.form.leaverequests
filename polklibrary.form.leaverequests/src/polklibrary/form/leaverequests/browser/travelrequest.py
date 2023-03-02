@@ -52,6 +52,16 @@ class TravelRequestView(BrowserView):
                 is_supervisor = True
         return userid == 'admin' or (('Manager' in roles or 'Reviewer' in roles) and is_supervisor) # and userid in self.context.supervisors
       
+    def is_director(self):
+        user = api.user.get_current()
+        userid = user.getProperty("id")
+        parent = self.context.aq_parent
+        
+        return (userid in parent.librarydirector_email or userid == parent.librarydirector_email)
+      
+              
+              
+              
               
     def is_in_workflow(self):
         return self.context.workflow_status == 'pending' or self.context.workflow_status == 'supervisor_approved'

@@ -194,12 +194,15 @@
                         </tal:block>
                         
                         
-                        <tal:block condition="python: context.workflow_status == 'supervisor_approved'">
+                        <tal:block condition="python: context.workflow_status == 'supervisor_approved' and view.is_director()">
                             <div class="trf-approval-required">Your approval is required:</div>
                             <label>Comment: <span class="trf-optional">(Optional)</span><label>
                             <textarea  class="trf-comment" name="form.workflow.comment"></textarea>
                             <input class="trf-forward" type="submit" name="form.workflow.forward" value="Approve (Send to Library Office)" />
                             <input class="trf-back" type="submit" name="form.workflow.back" value="Send Back (Returns to pending)" />
+                        </tal:block>
+                        <tal:block condition="python: context.workflow_status == 'supervisor_approved' and not view.is_director()">
+                            <div>Approval options are restricted to the director at this point in the workflow.</div>
                         </tal:block>
                         
                         
