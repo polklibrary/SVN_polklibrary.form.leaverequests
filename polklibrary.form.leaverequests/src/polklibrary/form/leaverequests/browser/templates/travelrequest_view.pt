@@ -243,14 +243,7 @@
                     </div>
                     
                     <label>
-                        Date and time you will be traveling from work?
-                    </label>
-                    <div>
-                        ${context/activity_datetime}
-                    </div>
-                    
-                    <label>
-                        Describe the nature of the professinal development/activity and how it relates to your job:
+                        Describe the nature of the professional development/activity and how it relates to your job:
                     </label>
                     <div>
                         ${context/activity_description}
@@ -278,14 +271,14 @@
                     </div>
                     
                     <label>
-                        Provisions for assigned responsiblities:
+                        Provisions for assigned responsibilities:
                     </label>
                     <div>
                         ${context/provisions}
                     </div>
                     
                     <label>
-                        Estimated cost of trip?
+                        Estimated total cost of trip for UWO Libraries?
                     </label>
                     <div>
                         ${context/estimated_cost}
@@ -306,7 +299,7 @@
                     </div>
                     
                     <label>
-                        Submitted
+                        Submitted on:
                     </label>
                     <div>
                         ${view/created}

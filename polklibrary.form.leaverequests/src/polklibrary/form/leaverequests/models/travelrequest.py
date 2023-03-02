@@ -108,16 +108,16 @@ class ITravelRequest(model.Schema):
         default=u"",
     )
     
-    activity_datetime = schema.TextLine(
-        title=u"Date and time you will be traveling from work?",
-        required=True,
-        missing_value=u"",
-        default=u"",
-    )
+    # activity_datetime = schema.TextLine(
+        # title=u"Date and time you will be traveling from work?",
+        # required=True,
+        # missing_value=u"",
+        # default=u"",
+    # )
     
     
     activity_description = schema.Text(
-        title=u"Describe the nature of the professinal development/activity and how it relates to your job:",
+        title=u"Describe the nature of the professional development/activity and how it relates to your job:",
         required=True,
         missing_value=u"",
         default=u"",
@@ -147,15 +147,15 @@ class ITravelRequest(model.Schema):
     )
     
     provisions = schema.Text(
-        title=u"Provisions for assigned responsiblities:",
+        title=u"Provisions for assigned responsibilities:",
         required=True,
         missing_value=u"",
         default=u"",
     )
     
     estimated_cost = schema.TextLine(
-        title=u"Estimated cost of trip?",
-        description=u"(Registration costs, mileage, parking, meals, lodging, etc.)",
+        title=u"Estimated total cost of trip for UWO Libraries?",
+        #description=u"(Registration costs, mileage, parking, meals, lodging, etc.)",
         required=True,
         missing_value=u"",
         default=u"",
