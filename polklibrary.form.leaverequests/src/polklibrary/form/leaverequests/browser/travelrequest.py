@@ -15,12 +15,13 @@ class TravelRequestView(BrowserView):
     template = ViewPageTemplateFile("templates/travelrequest_view.pt")
     
     def __call__(self):
+        alsoProvides(self.request, IDisableCSRFProtection)
+        self.skip_reviewer_worflow_step()
             
         if self.request.form.get('form.test.pending', ''):
             self.context.workflow_status = u'pending'
             self.context.reindexObject()      
-            
-        
+                    
         if self.request.form.get('form.workflow.forward', ''):
             print('forward')
             self.workflow_forward()
@@ -50,7 +51,9 @@ class TravelRequestView(BrowserView):
             supervisors = s.split('|')
             if userid in supervisors[1]:
                 is_supervisor = True
+                
         return userid == 'admin' or (('Manager' in roles or 'Reviewer' in roles) and is_supervisor) # and userid in self.context.supervisors
+      
       
     def is_director(self):
         user = api.user.get_current()
@@ -68,6 +71,14 @@ class TravelRequestView(BrowserView):
       
     def comment_as_html(self):
         return self.context.workflow_status_comments.replace('\n','<br />')
+      
+      
+      
+    def skip_reviewer_worflow_step(self):
+        if self.context.workflow_status == u'pending' and self.is_reviewer():
+            self.context.workflow_status = u'supervisor_approved'
+            self.context.reindexObject()
+            
       
     def workflow_forward(self):
     
