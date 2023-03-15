@@ -30,6 +30,7 @@ class TravelRequestPrint(BrowserView):
     def portal(self):
         return api.portal.get()
         
+        
 class TravelRequestView(BrowserView):
 
     template = ViewPageTemplateFile("templates/travelrequest_view.pt")
