@@ -42,6 +42,14 @@
         permission="zope2.View"
         />
         
+    <browser:page
+        for="polklibrary.form.leaverequests.models.travelrequest.ITravelRequest"
+        name="travelrequest_print"
+        class=".travelrequest.TravelRequestPrint"
+        permission="zope.Public"
+        />
+        
+        
         
     <browser:page
         for="polklibrary.form.leaverequests.models.leaverequest.ILeaveRequest"

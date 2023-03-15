@@ -45,6 +45,14 @@ class LeaveRequestView(BrowserView):
     
     def __call__(self):
         alsoProvides(self.request, IDisableCSRFProtection)
+
+        # security: limit to owner and reviewers
+        if not self.is_reviewer():
+            user = api.user.get_current()
+            if not str(user.getProperty("id")) in self.context.email:
+                self.request.response.redirect(self.context.aq_parent.absolute_url())
+                
+        
         if self.request.form.get('form.delete', None):
             with api.env.adopt_roles(roles=['Manager']):
                 DeleteEventMailed(self.context.UID(), self.context.title, self.context.supervisors, self.context.timeoff)

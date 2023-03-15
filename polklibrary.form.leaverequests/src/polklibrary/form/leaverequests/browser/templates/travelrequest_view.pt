@@ -123,13 +123,27 @@
                 padding: 5px 10px 10px 10px;
             }
             
-            
+            .trf-options {
+                margin: 0px 10px;
+                text-align: right;
+            }
+            .trf-options > a {
+                font-weight: bold;
+                text-decoration: none !important;
+            }
         </style>
 	</metal:block>
 
 	<metal:content-core fill-slot="content-core">
 
         <div id="travelrequest-sheet" class="column">
+            
+            
+            <div class="col-100">
+                <div class="trf-options">
+                    <a target="_blank" href="${context/absolute_url}/travelrequest_print?hash=${context/UID}">&#128438; Print Request</a>
+                </div>
+            </div>
             
             <div class="col-33">
                 <div class="trf-status column-outer">

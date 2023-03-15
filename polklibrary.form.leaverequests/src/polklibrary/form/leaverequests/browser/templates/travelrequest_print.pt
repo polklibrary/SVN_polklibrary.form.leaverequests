@@ -1,0 +1,132 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="plone"
+	  lang="en">
+      
+<head>
+    <style>
+        body{ font-family: arial;  width: 650px; position: relative;}
+        h1 { font-size: 24px; }
+        
+        #logo {position: absolute; right: 0; top: 3px; width: 250px;}
+        
+        div.info-box { border-top: 2px solid black; padding:  20px 10px 10px 20px;}
+        label { font-weight: bold; display: block;}
+        div.info-box > div { padding: 5px 10px 15px 10px; }
+        
+        .status-pending {color: red;}
+        .status-pending-2 {color: red;}
+        .status-approved {color: green;}
+    </style>
+</head>
+<body>
+
+
+    <h1>Travel Request - 
+        <span class="status-pending status-pending" tal:condition="python: context.workflow_status == 'denied'"> DENIED </span>
+        <span class="status-pending status-pending-2" tal:condition="python: context.workflow_status in ['pending','supervisor_approved']"> PENDING</span>
+        <span class="status-pending status-approved" tal:condition="python: context.workflow_status == 'director_approved'"> Approved</span>
+    </h1>
+    
+    <img id="logo" src="https://library.uwosh.edu/++theme++uwosh/images/wordmarks/uwo-libraries-dark.png" />
+    
+    
+    <div class="info-box">
+        <label>
+            Name
+        </label>
+        <div>
+            ${context/title}
+        </div>
+        
+        <label>
+            Email
+        </label>
+        <div>
+            ${context/email}
+        </div>
+                   
+                            
+        <label>
+            Name of conference or activity?
+        </label>
+        <div>
+            ${context/activity}
+        </div>
+        
+        <label>
+            Where is the location of your conference/activity?
+        </label>
+        <div>
+            ${context/location}
+        </div>
+        
+        <label>
+            Describe the nature of the professional development/activity and how it relates to your job:
+        </label>
+        <div>
+            ${context/activity_description}
+        </div>
+        
+        <label>
+            Type of professional development
+        </label>
+        <div>
+            ${context/development_type}
+        </div>
+        
+        <label>
+            Did you apply or will you apply for university professional development funding?
+        </label>
+        <div>
+            ${context/funding}
+        </div>
+        
+        <label>
+            Names of other staff attending:
+        </label>
+        <div>
+            ${context/others_attending}
+        </div>
+        
+        <label>
+            Provisions for assigned responsibilities:
+        </label>
+        <div>
+            ${context/provisions}
+        </div>
+        
+        <label>
+            Estimated total cost of trip for UWO Libraries?
+        </label>
+        <div>
+            ${context/estimated_cost}
+        </div>
+        
+        <label>
+            Departure date and time?
+        </label>
+        <div>
+            ${context/departure_datetime}
+        </div>
+        
+        <label>
+            Return date and time?
+        </label>
+        <div>
+            ${context/return_datetime}
+        </div>
+        
+        <label>
+            Submitted on:
+        </label>
+        <div>
+            ${view/created}
+        </div>
+        
+        
+    </div>
+        
+</body>
+</html>
