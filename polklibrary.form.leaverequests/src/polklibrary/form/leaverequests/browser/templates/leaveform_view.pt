@@ -89,17 +89,7 @@
                 padding: 20px 25px;
                 position: relative;
             }
-            .submit-travelrequest::after {
-                background-color: red;
-                border-radius: 4px 4px 0 0;
-                content: "Please do not use yet";
-                position: absolute;
-                top: 0px;
-                left: 0px;
-                z-index: 1;
-                right: 0;
-                color: white;
-            }
+            
             
             #leave-reports, #travel-reports{
                 background-color: #b12a10;
