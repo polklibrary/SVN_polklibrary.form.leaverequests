@@ -22,6 +22,8 @@ def TimeOffFormater(timeoff):
         leave = 'Other'
         if opts[1] == 'SL':
             leave = 'Sick Leave'
+        if opts[1] == 'FU':
+            leave = 'Furlough'
         if opts[1] == 'PH':
             leave = 'Personal Holiday'
         if opts[1] == 'FH':
